@@ -22,7 +22,7 @@ import numpy
 import time
 import os
 
-library = os.path.abspath('./hardware/nicaiu.dll')
+dll = ctypes.windll.LoadLibrary('nicaiu.dll')
 
 print(library)
 
