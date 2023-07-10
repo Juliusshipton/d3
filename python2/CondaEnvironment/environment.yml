@@ -47,4 +47,22 @@ dependencies:
       - enable==4.2.1
       - traits==4.2.1
       - traitsui==4.2.1
+      - zlib==1.2.13=h4dc903c_0
+      - numpy==1.7.1=py27_2
+      - ca-certificates==2023.05.30=hecd8cb5_0
+      - python==2.7.18=h441ce09_3
+      - jpeg==8d=2
+      - tk==8.6.12=h5d9f67b_0
+      - sqlite==3.41.2=h6c40b1e_0
+      - qt==4.7.4=0
+      - imaging==1.1.7=py27_2
+      - pyside==1.1.2=py27_1
+      - readline==8.2=hca72f7f_0
+      - freetype==2.4.10=1
+      - python.app==1.2=py27_4
+      - libffi==3.4.4=hecd8cb5_0
+      - prompt_toolkit==1.0.15=py27h4a7b9c2_0
+      - shiboken==1.1.2=py27_0
+      - ncurses==6.4=hcec6c5f_0
+      - appnope==0.1.0=py27hb466136_0
 prefix: /Users/juliusshipton/anaconda3/envs/py2_32
