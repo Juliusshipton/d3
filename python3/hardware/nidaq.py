@@ -20,13 +20,8 @@ Copyright (C) 2009-2011 Helmut Fedder <helmut.fedder@gmail.com>
 import ctypes
 import numpy
 import time
-import os
 
 dll = ctypes.windll.LoadLibrary('nicaiu.dll')
-
-print(library)
-
-dll = ctypes.cdll.LoadLibrary(library)
 
 DAQmx_Val_Cfg_Default             = ctypes.c_int32(-1)
 DAQmx_Val_DoNotInvertPolarity     = ctypes.c_int32(0)
