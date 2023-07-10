@@ -1,0 +1,50 @@
+name: py2_32
+channels:
+  - defaults
+dependencies:
+  - appnope=0.1.0=py27hb466136_0
+  - backports=1.1=pyhd3eb1b0_0
+  - backports.functools_lru_cache=1.6.4=pyhd3eb1b0_0
+  - backports.shutil_get_terminal_size=1.0.0=pyhd3eb1b0_3
+  - ca-certificates=2023.05.30=hecd8cb5_0
+  - certifi=2020.6.20=pyhd3eb1b0_3
+  - decorator=4.4.0=py27_1
+  - enum34=1.1.6=py27_1
+  - freetype=2.4.10=1
+  - imaging=1.1.7=py27_2
+  - ipython=5.8.0=py27_0
+  - ipython_genutils=0.2.0=pyhd3eb1b0_1
+  - jpeg=8d=2
+  - libffi=3.4.4=hecd8cb5_0
+  - ncurses=6.4=hcec6c5f_0
+  - numpy=1.7.1=py27_2
+  - pathlib2=2.3.5=py27_0
+  - pexpect=4.8.0=pyhd3eb1b0_3
+  - pickleshare=0.7.5=py27_0
+  - pip=19.3.1=py27_0
+  - prompt_toolkit=1.0.15=py27h4a7b9c2_0
+  - ptyprocess=0.7.0=pyhd3eb1b0_2
+  - pyface=6.1.2=py27_0
+  - pygments=2.5.2=py_0
+  - pyside=1.1.2=py27_1
+  - python=2.7.18=h441ce09_3
+  - python.app=1.2=py27_4
+  - qt=4.7.4=0
+  - readline=8.2=hca72f7f_0
+  - scandir=1.10.0=pyh5d7bf9c_3
+  - setuptools=44.0.0=py27_0
+  - shiboken=1.1.2=py27_0
+  - simplegeneric=0.8.1=py27_2
+  - six=1.16.0=pyhd3eb1b0_1
+  - sqlite=3.41.2=h6c40b1e_0
+  - tk=8.6.12=h5d9f67b_0
+  - traitlets=4.3.3=py27_0
+  - wcwidth=0.2.5=pyhd3eb1b0_0
+  - wheel=0.37.1=pyhd3eb1b0_0
+  - zlib=1.2.13=h4dc903c_0
+  - pip:
+      - chaco==4.2.1
+      - enable==4.2.1
+      - traits==4.2.1
+      - traitsui==4.2.1
+prefix: /Users/juliusshipton/anaconda3/envs/py2_32
