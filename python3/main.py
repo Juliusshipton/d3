@@ -1,6 +1,6 @@
 
 
-# from hardware.nidaq import Scanner
+from hardware.nidaq import Scanner
 
 import socket
 import sys
