@@ -4,7 +4,7 @@ import weakref
 from traits.api import HasTraits, Range, Float, Bool
 from traitsui.api import View, Item, Group, HGroup, VGroup, Label
 
-import TimeTagger
+from .time_tagger_api import TimeTagger
 
 from tools.utility1 import StoppableThread
 
