@@ -18,22 +18,15 @@ class TimeTagger():
         
         return
 
-    def Counterate(self):
-        
-        # TODO: Figure out what to do here.
-
-        return
+    class Counterate(self):
+        test = 1
+        # TODO: Figure out what to do here.      
     
-    def Counter(self):
-        
+    class Counter(self):
+        test = 1
         # TODO: Figure out what to do here.
-
-        return
     
-    def Pulsed(self):
-        
+    class Pulsed(self):
+        test = 1
         # TODO: Figure out what to do here.
-
-        return
-
-
+        
