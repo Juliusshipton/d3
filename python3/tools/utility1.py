@@ -10,7 +10,8 @@ from traits.api import Float, HasTraits, HasPrivateTraits, Str, Tuple, File, But
 from traitsui.api import Handler, View, Item, OKButton, CancelButton, HGroup
 from traitsui.file_dialog import open_file, save_file
 
-from chaco.tools.simple_zoom import SimpleZoom 
+# SimpleZoom not in new chaco it is now BetterZoom
+# from chaco.tools.simple_zoom import SimpleZoom 
 
 import logging
 
