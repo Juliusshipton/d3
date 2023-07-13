@@ -6,11 +6,14 @@ import pickle as cPickle
 # Enthought library imports
 from traits.api import Float, HasPrivateTraits, Str, Tuple
 from traitsui.api import Handler, View, Item, OKButton, CancelButton
-# from traitsui.file_dialog import open_file, save_file
+from traitsui.file_dialog import open_file, save_file
 
 # PYTHON3 EDIT chaco.api to chaco for PlotGraphicsContext
 from chaco.api import PlotGraphicsContext
-from chaco.tools.simple_zoom import SimpleZoom 
+# PYTHON3 EDIT SimpleZoom outdated now BetterZoom
+# from chaco.tools.simple_zoom import SimpleZoom 
+from chaco.tools.better_zoom import BetterZoom 
+
 
 import logging
 
@@ -247,14 +250,14 @@ class GetSetItemsHandler( Handler ):
     """Handles save and load actions."""
         
     def save(self,info):
-        filename = 'TEST' # save_file(title='Save')
+        save_file(title='Save')
         if filename is '':
             return
         else:
             info.object.save(filename)
 
     def export(self, info):
-        filename = 'TEST' # save_file(title='Export to Ascii')
+        save_file(title='Export to Ascii')
         if filename is '':
             return
         if filename.find('.txt')==-1 or filename.find('.asc')==-1:
@@ -264,7 +267,7 @@ class GetSetItemsHandler( Handler ):
             info.object.save(filename)
 
     def load(self, info):
-        filename = 'TEST' # open_file(title='Load')
+        open_file(title='Load')
         if filename is '':
             return
         else:
@@ -288,7 +291,7 @@ class GetSetSaveImageHandler( GetSetItemsHandler ):
     """Provides handling of image save action."""
 
     def save_image(self, info):
-        filename = 'TEST' # save_file(title='Save Image')
+        save_file(title='Save Image')
         if filename is '':
             return
         else:
@@ -296,7 +299,7 @@ class GetSetSaveImageHandler( GetSetItemsHandler ):
                 filename=filename+'.png'
             info.object.save_image(filename)    
 
-class AspectZoomTool(SimpleZoom):
+class AspectZoomTool(BetterZoom):
 
     box = Tuple()
 
