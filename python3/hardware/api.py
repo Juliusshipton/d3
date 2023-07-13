@@ -19,7 +19,7 @@ See 'custom_api_example.py' for examples.
 import numpy as np
 import logging
 import time
-from pulse_generator_api import PulseGenerator
+from .pulse_generator_api import PulseGenerator
 
 class Scanner(  ):
     def getXRange(self):
