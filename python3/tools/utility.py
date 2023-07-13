@@ -9,7 +9,7 @@ from traitsui.api import Handler, View, Item, OKButton, CancelButton
 # from traitsui.file_dialog import open_file, save_file
 
 # PYTHON3 EDIT chaco.api to chaco for PlotGraphicsContext
-from chaco import PlotGraphicsContext
+from chaco.plot_graphics_context import PlotGraphicsContext
 from chaco.tools.simple_zoom import SimpleZoom 
 
 import logging
