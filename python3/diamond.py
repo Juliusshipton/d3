@@ -39,4 +39,5 @@ def startExperiment:
     
 # That's it for now! We pass over control to custom startup script if present. 
 if os.access(path+'/diamond_custom.py', os.F_OK):
-    execfile(path+'/diamond_custom.py')
+    # PYTHON3 EDIT execfile(path+'/diamond_custom.py')
+    exec(open("./diamond_custom.py").read())
