@@ -8,7 +8,8 @@ from traits.api import Float, HasPrivateTraits, Str, Tuple
 from traitsui.api import Handler, View, Item, OKButton, CancelButton
 # from traitsui.file_dialog import open_file, save_file
 
-from chaco.api import PlotGraphicsContext
+# PYTHON3 EDIT chaco.api to chaco for PlotGraphicsContext
+from chaco import PlotGraphicsContext
 from chaco.tools.simple_zoom import SimpleZoom 
 
 import logging
