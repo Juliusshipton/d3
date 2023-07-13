@@ -1,9 +1,9 @@
 import time
 import os
 import pickle as cPickle
-
+import sys 
 # PYTHON3 EDIT
-from sys import IOError
+# from sys import IOError
 
 # Enthought library imports
 from traits.api import Float, HasTraits, HasPrivateTraits, Str, Tuple, File, Button
