@@ -1,7 +1,7 @@
 
-# from TimeTagger import TimeTagger
+from TimeTagger import TimeTagger
 
-# from PulseGenerator.pulse_generator import PulseGenerator as PulseGeneratorBase
+from PulseGenerator.pulse_generator import PulseGenerator as PulseGeneratorBase
 
 import socket
 import sys
