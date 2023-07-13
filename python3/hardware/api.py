@@ -79,30 +79,30 @@ class RFSource():
     def setOutput(self, power, frequency):
         pass
 
-class PulseGeneratorClass( PulseGeneratorBase ):
+# class PulseGeneratorClass( PulseGeneratorBase ):
         
-    def Continuous(self, channels):
-        self.setContinuous(channels)
+#     def Continuous(self, channels):
+#         self.setContinuous(channels)
         
-    def Sequence(self, sequence, loop=True):
-        self.setSequence(sequence, loop)
+#     def Sequence(self, sequence, loop=True):
+#         self.setSequence(sequence, loop)
         
-    def Run(self, loop=None):
-        self.runSequence(loop=True)
+#     def Run(self, loop=None):
+#         self.runSequence(loop=True)
         
-    def Night(self):
-        self.setContinuous(0x0000)
+#     def Night(self):
+#         self.setContinuous(0x0000)
 
-    def Light(self):
-        self.Continuous(['green'])
+#     def Light(self):
+#         self.Continuous(['green'])
 
-    def Open(self):
-        self.setContinuous(0xffff)
+#     def Open(self):
+#         self.setContinuous(0xffff)
         
-    #for flip mirror
-    def FlipMirror(self):
-        self.Continuous(['green','test'])
-        self.Continuous(['green'])
+#     #for flip mirror
+#     def FlipMirror(self):
+#         self.Continuous(['green','test'])
+#         self.Continuous(['green'])
 
 class Laser():
     """Provides control of the laser power."""
