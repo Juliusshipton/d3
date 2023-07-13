@@ -18,7 +18,7 @@ class TimeTagger():
 		
 		return
 
-	def Counterate(self):
+	def Countrate(self):
 		test = 1
 		# TODO: Figure out what to do here.      
 	
