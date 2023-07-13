@@ -1,6 +1,7 @@
 import time
 import os
-import cPickle
+#PYTHON3 EDIT cPickle is just pickle
+import pickle as cPickle
 
 # Enthought library imports
 from traits.api import Float, HasPrivateTraits, Str, Tuple
