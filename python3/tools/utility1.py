@@ -15,7 +15,7 @@ from traitsui.file_dialog import open_file, save_file
 
 import logging
 
-from data_toolbox import writeDictToFile
+from .data_toolbox import writeDictToFile
 
 import threading
 
