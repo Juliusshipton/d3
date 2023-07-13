@@ -17,7 +17,7 @@ from chaco.tools.better_zoom import BetterZoom
 
 import logging
 
-from data_toolbox import writeDictToFile
+from .data_toolbox import writeDictToFile
 
 import threading
 
