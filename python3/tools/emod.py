@@ -341,7 +341,7 @@ if __name__ == '__main__':
     time.sleep(0.1)
     q = JobManager().queue
 
-    #EDITED PRINT FOR PYTHON3   
+    #PYTHON3 EDIT PRINT
     print([job.priority for job in q])
     print([q.index(job) if job in q else None for job in jobs])
     
