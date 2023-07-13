@@ -168,5 +168,5 @@ from .time_tagger_api import TimeTagger as tt
 #tagger=tt.TimeTagger('1634000FWQ')
 #tagger=tt.TimeTagger('2138000XIC')
 tagger=tt.TimeTagger('1634000FWP')
-import time_tagger_control
+from . import time_tagger_control
 TimeTagger=time_tagger_control.TimeTaggerControl(tagger)
