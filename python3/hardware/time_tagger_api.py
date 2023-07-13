@@ -12,5 +12,9 @@ class TimeTagger():
     def __init__(self, serial):
         self.serial_number = serial
 
+    def TimeTagger(self, serial):
+        # do something with that serial number
+        return
+
 
 
