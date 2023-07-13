@@ -13,8 +13,27 @@ class TimeTagger():
         self.serial_number = serial
 
     def TimeTagger(self):
-        # do something with that serial number
+        
+        # TODO: Do something with that serial number
+        
         return
 
+    def Counterate(self):
+        
+        # TODO: Figure out what to do here.
+
+        return
+    
+    def Counter(self):
+        
+        # TODO: Figure out what to do here.
+
+        return
+    
+    def Pulsed(self):
+        
+        # TODO: Figure out what to do here.
+
+        return
 
 
