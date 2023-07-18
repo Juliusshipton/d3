@@ -1,5 +1,5 @@
 
-from python3.hardware.pulse_generator_api import PulseGenerator
+from .hardware.pulse_generator_api import PulseGenerator
 from tools.utility import edit_singleton
 from datetime import date
 import os
