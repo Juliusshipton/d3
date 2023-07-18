@@ -23,7 +23,11 @@ class TimeTagger():
 	def Counter(self, args, margs):
 		test = 1
 		# TODO: Figure out what to do here.
-	
+
+	def Counter(self, num, args, margs):
+		test = 1
+		# TODO: Figure out what to do here.
+
 	def Pulsed(self, args, margs):
 		test = 1
 		# TODO: Figure out what to do here.
