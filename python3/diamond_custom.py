@@ -54,7 +54,9 @@ if __name__ == '__main__':
     # odmrn.edit_traits()
     from measurements.odmrr import ODMRR #edit by jerry (53-55)
     odmrr=ODMRR()
-    odmrr.edit_traits()
+
+    # PYTHON3 EDIT uncomment edit_traits that starts ui when on actual hardware
+    # odmrr.edit_traits()
     from measurements.rabi import Rabi
     rabi=Rabi()
     from analysis.pulsed import PulsedAnalyzer
