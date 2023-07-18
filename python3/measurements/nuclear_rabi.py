@@ -7,7 +7,7 @@ import logging
 import time
 import hardware.api as ha
 
-from pulsed import Pulsed
+from .pulsed import Pulsed
 
 class NuclearRabi(Pulsed):
 
