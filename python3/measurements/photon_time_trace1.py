@@ -1,5 +1,6 @@
 import numpy
-import cPickle
+# PYTHON3 EDIT
+import pickle as cPickle
 
 # enthought library imports
 from traits.api import SingletonHasTraits, HasTraits, Trait, Instance, Property, Int, Float, Range,\
