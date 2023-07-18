@@ -27,7 +27,7 @@ class PulseGenerator():
 		return ""
 	
 	@staticmethod
-	def Light(self):
+	def Light():
 		# self.Continuous(['green'])
 		return ""
 
