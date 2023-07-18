@@ -10,19 +10,19 @@ if __name__ == '__main__':
 
     # PYTHON3 EDIT Uncomment confocal when testing on device, just focusing on imports and compilation for now    
     # # start confocal including auto_focus tool
-    # from measurements.confocal import Confocal
+    from measurements.confocal import Confocal
     # scanner= ha.Scanner()
     # confocal = Confocal(scanner)
     # confocal.edit_traits()
     
+    # PYTHON3 EDIT Uncomment measuremnts usage when testing on device, focusing on imports and compilation for now
     from measurements.auto_focus import AutoFocus
-    auto_focus = AutoFocus(confocal)
-    auto_focus.edit_traits()
-
-    try:
-        auto_focus.load('defaults/auto_focus.pyd')
-    except:
-        pass
+    # auto_focus = AutoFocus(confocal)
+    # auto_focus.edit_traits()
+    # try:
+    #     auto_focus.load('defaults/auto_focus.pyd') # auto_focus.pyd not found in diamond_jerry
+    # except:
+    #     pass
     
     # some imports providing short names for the main modules
     import numpy as np
