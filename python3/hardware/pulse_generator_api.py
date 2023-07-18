@@ -31,7 +31,8 @@ class PulseGenerator():
 	def Night(self):
 		# self.setContinuous(0x0000)
 		return ""
-
+	
+	@staticmethod
 	def Light(self):
 		# self.Continuous(['green'])
 		return ""
