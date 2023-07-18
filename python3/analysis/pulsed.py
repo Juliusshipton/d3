@@ -7,7 +7,7 @@ The second part provides Trait GUIs
 """
 
 import numpy as np
-from fitting import find_edge, run_sum
+from .fitting import find_edge, run_sum
 
 def spin_state(c, dt, T, t0=0.0, t1= -1.):
     
