@@ -30,9 +30,10 @@ if __name__ == '__main__':
     import analysis as an
     
     
+    # PHYTHON3 EDIT uncomment edit_traits() when actually testing
     from measurements.photon_time_trace1 import PhotonTimeTrace
-    time_trace = PhotonTimeTrace()
-    time_trace.edit_traits()
+    # time_trace = PhotonTimeTrace()
+    # time_trace.edit_traits()
         
     
     # from measurements.odmr import ODMR
