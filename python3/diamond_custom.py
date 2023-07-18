@@ -7,12 +7,13 @@ import os
 if __name__ == '__main__':
 
     import hardware.api as ha
-    
-    # start confocal including auto_focus tool
-    from measurements.confocal import Confocal
-    scanner= ha.Scanner()
-    confocal = Confocal(scanner)
-    confocal.edit_traits()
+
+    # PYTHON3 EDIT Uncomment confocal when testing on device, just focusing on imports and compilation for now    
+    # # start confocal including auto_focus tool
+    # from measurements.confocal import Confocal
+    # scanner= ha.Scanner()
+    # confocal = Confocal(scanner)
+    # confocal.edit_traits()
     
     from measurements.auto_focus import AutoFocus
     auto_focus = AutoFocus(confocal)
