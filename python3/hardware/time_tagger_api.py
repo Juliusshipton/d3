@@ -13,9 +13,7 @@ class TimeTagger():
 		self.serial_number = serial
 
 	def TimeTagger(self):
-		
 		# TODO: Do something with that serial number
-		
 		return
 
 	def Countrate(self, int):
