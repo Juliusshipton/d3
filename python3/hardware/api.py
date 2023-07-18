@@ -79,37 +79,6 @@ class RFSource():
 	def setOutput(self, power, frequency):
 		pass
 
-# class PulseGeneratorClass( PulseGeneratorBase ):
-
-#     def Continuous(self, channels):
-#         self.setContinuous(channels)
-
-#     def Sequence(self, sequence, loop=True):
-#         self.setSequence(sequence, loop)
-
-#     def Run(self, loop=None):
-#         self.runSequence(loop=True)
-
-#     def Night(self):
-#         self.setContinuous(0x0000)
-
-#     def Light(self):
-#         self.Continuous(['green'])
-
-#     def Open(self):
-#         self.setContinuous(0xffff)
-
-#     #for flip mirror
-#     def FlipMirror(self):
-#         self.Continuous(['green','test'])
-#         self.Continuous(['green'])
-
-
-
-# import dummy_time_tagger as TimeTagger
-# if customized hardware factory is present run it
-# Provide this file to overwrite / add your own factory functions, classes, imports
-
 from tools.utility import singleton
 
 @singleton
@@ -159,7 +128,6 @@ def RFSource():
 
 	return rf_source.SMIQ_RF(visa_address='GPIB0::29')
 
-@singleton
 def PulseGenerator():
 	# return PulseGeneratorClass(serial='1634000FWV',channel_map={'green':0,'aom':0, 'mw_x':1, 'mw':1,'rf':2,'laser':3,'sequence':4, 'mw_2':5, 'test':6, 'blue':7, 'flip':8})
 	#return PulseGeneratorClass(serial='1729000I9M',channel_map={'green':0,'aom':0, 'mw_x':1, 'mw':1,'rf':2,'laser':3,'sequence':4, 'blue':7})
