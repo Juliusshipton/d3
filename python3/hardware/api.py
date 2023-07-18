@@ -114,7 +114,7 @@ from tools.utility import singleton
 
 @singleton
 def Scanner():
-	from nidaq import Scanner
+	from .nidaq import Scanner
 	return Scanner( CounterIn='/Dev1/Ctr1',
 					CounterOut='/Dev1/Ctr0',
 					TickSource='/Dev1/PFI3',
