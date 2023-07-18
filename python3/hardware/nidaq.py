@@ -59,7 +59,8 @@ def CHK(err):
 		buf_size = 1000
 		# PYTHON3 EDIT
 		# buf = ctypes.create_string_buffer('\000' * buf_size)
-		buf = 'Test'
+		buf = bytes('Test', encoding='utf-8')
+
 		dll.DAQmxGetErrorString(err,ctypes.byref(buf),buf_size)
 		raise RuntimeError('nidaq call failed with error %d: %s'%(err,repr(buf.value)))
 
