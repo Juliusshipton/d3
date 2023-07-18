@@ -67,7 +67,8 @@ import threading
 import time
 import logging
 
-import fitting
+# PYTHON3 EDIT import syntax
+from . import fitting
 
 from tools.utility import GetSetItemsHandler, GetSetItemsMixin
 
