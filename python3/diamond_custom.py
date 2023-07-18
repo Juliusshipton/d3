@@ -1,4 +1,5 @@
 
+from python3.hardware.pulse_generator_api import PulseGenerator
 from tools.utility import edit_singleton
 from datetime import date
 import os
@@ -131,7 +132,8 @@ if __name__ == '__main__':
     #from measurements.odmr_ccd_test_v3 import CCDODMR_test3     #edit by jerry (111-113)
     #ccdodmra3 = CCDODMR_test3()
     #ccdodmra3.edit_traits()
-    ha.PulseGenerator().Light()
+    
+    PulseGenerator.Light()
 	
     t = date.today()
     t = t.timetuple()
