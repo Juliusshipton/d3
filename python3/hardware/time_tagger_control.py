@@ -45,8 +45,8 @@ class TimeTaggerControl( HasTraits ):
     
     refresh_interval = Range(low=0.01, high=1, value=0.5, desc='Refresh interval [s]', label='Refresh interval [s]')    
     
-    def __init__(self, time_tagger, **kwargs):
-        self.time_tagger = time_tagger
+    def __init__(self, **kwargs):
+        # self.time_tagger = time_tagger
         self._create_counter()
         super(TimeTaggerControl, self).__init__(**kwargs)
         #self._stoppable_thread = StoppableThread(target=self._run)
