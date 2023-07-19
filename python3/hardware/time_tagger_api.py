@@ -8,12 +8,12 @@ This will be the Api class for TimeTagger that will send commands and parameters
 class TimeTagger():
 
 	serial_number = "2138000XH1"
-	
+
 	# Only way counter is called in our code is with 3 integer parameters
 	def Counter(tt_socket, a: int, b: int, c: int):
 		print("Sending data...")
 
-		test = ' '.join(a,b,c)
+		test = ' '.join(map(str, [a, b, c]))
 		tt_socket.sendall(test.encode())
 
 		data = tt_socket.recv(1024).decode()
@@ -24,7 +24,7 @@ class TimeTagger():
 	def Pulsed(tt_socket, a: int, b: int, c: int, d: int, e: int, f: int):
 		print("Sending data...")
 
-		test = ' '.join(a,b,c,d,e,f)
+		test = ' '.join(map(str, [a, b, c]))
 		tt_socket.sendall(test.encode())
 		
 		data = tt_socket.recv(1024).decode()
