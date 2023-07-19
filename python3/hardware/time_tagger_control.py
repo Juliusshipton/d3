@@ -8,6 +8,19 @@ from .time_tagger_api import TimeTagger
 
 from tools.utility1 import StoppableThread
 
+import socket
+import sys
+
+print("Python 3 running ...")
+
+HOST = '127.0.0.1'
+PORT = 8888
+
+tt_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+tt_socket.connect((HOST, PORT))
+
+print("Connected")
+
 class TimeTaggerControl( HasTraits ):
     
     trigger_level_0 = Range(low=0., high=2.5, value=0.5, desc='trigger level for channel 0 in volts', label='trigger level 0 [V]')
@@ -116,14 +129,14 @@ class TimeTaggerControl( HasTraits ):
     def __del__(self):
         self._stoppable_thread.stop()
         
-    def Countrate(self, channel):
-        return TimeTagger.Countrate(self.time_tagger, channel)
+    # def Countrate(self, channel):
+    #     return TimeTagger.Countrate(self.time_tagger, channel)
         
     def Counter(self, *args, **kwargs):
-        return TimeTagger.Counter(self.time_tagger, *args, **kwargs)
+        return TimeTagger.Counter(tt_socket, *args, **kwargs)
     
     def Pulsed(self, *args, **kwargs):
-        return TimeTagger.Pulsed(self.time_tagger, *args, **kwargs)    
+        return TimeTagger.Pulsed(tt_socket, *args, **kwargs)    
         
     traits_view = View(Group(Label('Channel'), Label('Trigger level [V]'), Label('count rate [1/s]'),
                              Label('0'), Item('trigger_level_0', show_label=False), Item('count_rate_0', show_label=False, style='readonly', format_str='%.f', width=-80),

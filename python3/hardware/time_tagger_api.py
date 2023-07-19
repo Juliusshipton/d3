@@ -7,28 +7,27 @@ This will be the Api class for TimeTagger that will send commands and parameters
 
 class TimeTagger():
 
-	num_of_foos = "FOOSERIAL"
-
-	def __init__(self, serial):
-		self.serial_number = serial
-
-	def TimeTagger(self):
-		# TODO: Do something with that serial number
-		return
-
-	def Countrate(self, int):
-		test = 1
-		# TODO: Figure out what to do here.      
+	serial_number = "2138000XH1"
 	
-	def Counter(self, args, margs):
-		test = 1
-		# TODO: Figure out what to do here.
+	# Only way counter is called in our code is with 3 integer parameters
+	def Counter(tt_socket, a: int, b: int, c: int):
+		print("Sending data...")
 
-	def Counter(self, num, args, margs):
-		test = 1
-		# TODO: Figure out what to do here.
+		test = ' '.join(a,b,c)
+		tt_socket.sendall(test.encode())
 
-	def Pulsed(self, args, margs):
-		test = 1
-		# TODO: Figure out what to do here.
+		data = tt_socket.recv(1024).decode()
+		print('Received from server: ' + data)
+		# TODO: Return a reference class that contains a method .getData(), and populate with data
+
+	# Only way pulsed is called in our code is with 6 integer parameters
+	def Pulsed(tt_socket, a: int, b: int, c: int, d: int, e: int, f: int):
+		print("Sending data...")
+
+		test = ' '.join(a,b,c,d,e,f)
+		tt_socket.sendall(test.encode())
+		
+		data = tt_socket.recv(1024).decode()
+		print('Received from server: ' + data)
+		# TODO: Return a reference class that contains a method .getData(), and populate with data
 
