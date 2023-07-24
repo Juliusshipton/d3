@@ -38,7 +38,7 @@ while True:
 		time_tagger = TimeTagger.TimeTagger(str(serial_number))
 
 	# 3 if command is Counter create a counter with the params		
-	if(command_object.Command == "Counter"):
+	if(command_object["Command"] == "Counter"):
 
 		# create counter 
 		counterA = TimeTagger.Counter(time_tagger, *command_object["Params"])
