@@ -43,6 +43,7 @@ while True:
 		# create counter 
 		counterA = TimeTagger.Counter(time_tagger, *command_object["Params"])
 		# indicate 
+		print(counterA.getData())
 		conn.sendall(counterA.getData())
 
 
