@@ -44,7 +44,7 @@ while True:
 		# create counter 
 		counter = TimeTagger.Counter(time_tagger, *command_object["Params"])
 		# indicate 
-		print(counterA.getData())
+		print(counter.getData())
 		
 		message = {
 			"CommandRan": "Counter",
