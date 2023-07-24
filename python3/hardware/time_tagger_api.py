@@ -28,6 +28,19 @@ class TimeTagger():
 		data = tt_socket.recv(1024).decode()
 		print('Received from server: ' + str(data))
 
+		# return an object that contains a method called getData()
+		class CounterResult:
+			def __init__(self, socket):
+				self.socket = socket
+
+			def getData(self):
+				
+				
+				
+				pass
+		
+		return CounterResult(tt_socket)
+
 
 	# Only way pulsed is called in our code is with 6 integer parameters
 	def Pulsed(tt_socket, a: int, b: int, c: int, d: int, e: int, f: int):

@@ -39,12 +39,16 @@ while True:
 
 	# 3 if command is Counter create a counter with the params		
 	if(command_object["Command"] == "Counter"):
-
 		# create counter 
 		counterA = TimeTagger.Counter(time_tagger, *command_object["Params"])
 		# indicate 
 		print(counterA.getData())
-		conn.sendall(counterA.getData())
+		
+		message = {
+			"CommandRan": "Counter",
+			"GetData": counterA.getData()
+		}
+		conn.sendall(json.dumps(message).encode())
 
 
 	# Kill check
