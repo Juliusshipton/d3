@@ -50,8 +50,8 @@ class TimeTaggerControl( HasTraits ):
         # self._create_counter()
         super(TimeTaggerControl, self).__init__(**kwargs)
         #self._stoppable_thread = StoppableThread(target=self._run)
-        self._stoppable_thread = StoppableThread(target=TimeTaggerControl._run, args=(weakref.proxy(self),))
-        self._stoppable_thread.start()
+        # self._stoppable_thread = StoppableThread(target=TimeTaggerControl._run, args=(weakref.proxy(self),))
+        # self._stoppable_thread.start()
         
     def _create_counter(self):
         self._counter_0 = TimeTagger.Countrate(self.time_tagger, 0)
