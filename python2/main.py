@@ -27,7 +27,9 @@ tagger=TimeTagger.TimeTagger('2138000XH1')
 
 params = [1, 2, 3]
 
-TimeTagger.Counter(tagger, *params)
+test = TimeTagger.Counter(tagger, *params)
+
+print(test)
 
 
 # while True: 
