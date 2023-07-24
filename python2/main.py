@@ -18,19 +18,28 @@ conn, addr = s.accept()
 
 print "Listening on port" + str(PORT)
 
-while True: 
-	
-	# String data received from client
-	data = conn.recv(1024).decode()
-	
-	# Display and manipulate
-	print data
-	data = data.upper()
-	
-	# Return
-	conn.sendall(data)
 
-	# Kill check
-	if data == 'EXIT':
-		s.close()
-		sys.exit()
+
+tagger=TimeTagger('2138000XH1')
+
+params = [1, 2, 3]
+
+TimeTagger.Counter(tagger, params)
+
+
+# while True: 
+	
+# 	# String data received from client
+# 	data = conn.recv(1024).decode()
+	
+# 	# Display and manipulate
+# 	print data
+# 	data = data.upper()
+	
+# 	# Return
+# 	conn.sendall(data)
+
+# 	# Kill check
+# 	if data == 'EXIT':
+# 		s.close()
+# 		sys.exit()
