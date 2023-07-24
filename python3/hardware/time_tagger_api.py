@@ -14,7 +14,6 @@ class TimeTagger():
 	# Only way counter is called in our code is with 3 integer parameters
 	def Counter(tt_socket, channel: int, pSecPerPoint: int, traceLength: int):
 
-
 		params = [channel, pSecPerPoint, traceLength]
 
 		command = {
@@ -27,7 +26,7 @@ class TimeTagger():
 		print("Sending data...")
 		tt_socket.sendall(json.dumps(command).encode())
 		data = tt_socket.recv(1024).decode()
-		print('Received from server: ' + data)
+		print('Received from server: ' + str(data))
 
 
 	# Only way pulsed is called in our code is with 6 integer parameters
