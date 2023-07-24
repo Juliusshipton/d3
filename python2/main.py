@@ -20,16 +20,16 @@ print "Python 2 running ..."
 
 
 
-tagger=TimeTagger.TimeTagger('2138000XH1')
+# tagger=TimeTagger.TimeTagger('2138000XH1')
 
-# tagger=TimeTagger.TimeTagger('1634000FWP')
+tagger=TimeTagger.TimeTagger('1634000FWP')
 
 
-params = [1, 2, 3]
+params = [0, 1, 10]
 
 test = TimeTagger.Counter(tagger, *params)
 
-print(test)
+print(test.getData())
 
 
 # while True: 
