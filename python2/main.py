@@ -55,7 +55,7 @@ while True:
 
 	if(command_object["Command"] == "GetData"):
 		# indicate 
-		print(counterA.getData())
+		print(counter.getData())
 		
 		message = {
 			"CommandRan": "GetData",
