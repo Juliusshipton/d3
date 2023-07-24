@@ -33,13 +33,13 @@ while True:
 
 	# 2 if time tagger is none initialize with new TimeTagger() using serial from data string
 	if(time_tagger is None):
-		time_tagger = TimeTagger.TimeTagger(command_object.TimeTaggerSerial)
+		time_tagger = TimeTagger.TimeTagger(command_object["TimeTaggerSerial"])
 
 	# 3 if command is Counter create a counter with the params		
 	if(command_object.Command == "Counter"):
 
 		# create counter 
-		counterA = TimeTagger.Counter(time_tagger, *command_object.Params)
+		counterA = TimeTagger.Counter(time_tagger, *command_object["Params"])
 		# indicate 
 		conn.sendall(counterA.getData())
 
