@@ -35,7 +35,7 @@ while True:
 	if(time_tagger is None):
 		serial_number = command_object["TimeTaggerSerial"]
 		print serial_number
-		time_tagger = TimeTagger.TimeTagger(serial_number)
+		time_tagger = TimeTagger.TimeTagger(str(serial_number))
 
 	# 3 if command is Counter create a counter with the params		
 	if(command_object.Command == "Counter"):
