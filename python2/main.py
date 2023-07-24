@@ -33,7 +33,9 @@ while True:
 
 	# 2 if time tagger is none initialize with new TimeTagger() using serial from data string
 	if(time_tagger is None):
-		time_tagger = TimeTagger.TimeTagger(command_object["TimeTaggerSerial"])
+		serial_number = command_object["TimeTaggerSerial"]
+		print serial_number
+		time_tagger = TimeTagger.TimeTagger(serial_number)
 
 	# 3 if command is Counter create a counter with the params		
 	if(command_object.Command == "Counter"):

@@ -9,7 +9,7 @@ import json
 
 class TimeTagger():
 
-	serial_number = "2138000XH1"
+	serial_number = "1634000FWP"
 
 	# Only way counter is called in our code is with 3 integer parameters
 	def Counter(tt_socket, channel: int, pSecPerPoint: int, traceLength: int):
