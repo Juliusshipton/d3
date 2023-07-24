@@ -14,7 +14,7 @@ class TimeTagger():
 	# Only way counter is called in our code is with 3 integer parameters
 	def Counter(tt_socket, channel: int, pSecPerPoint: int, traceLength: int):
 
-		params = [channel, pSecPerPoint, traceLength]
+		params = [channel, int(pSecPerPoint), traceLength]
 
 		command = {
 			"TimeTaggerSerial": TimeTagger.serial_number,
@@ -36,7 +36,7 @@ class TimeTagger():
 			def getData(self):
 				
 				
-				
+
 				pass
 		
 		return CounterResult(tt_socket)
