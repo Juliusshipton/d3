@@ -34,8 +34,6 @@ class TimeTagger():
 				self.socket = socket
 
 			def getData(self):
-				
-				
 
 				pass
 		

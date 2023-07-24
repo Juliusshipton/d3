@@ -46,7 +46,7 @@ while True:
 		
 		message = {
 			"CommandRan": "Counter",
-			"GetData": counterA.getData()
+			"GetData": counterA.getData().tolist()
 		}
 		conn.sendall(json.dumps(message).encode())
 
