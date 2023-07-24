@@ -34,7 +34,17 @@ class TimeTagger():
 				self.socket = socket
 
 			def getData(self):
+				
+				command = {
+					"TimeTaggerSerial": TimeTagger.serial_number,
+					"Command": "GetData",
+				}
 
+				#This block of sends the command and stores received data in data string
+				print("Sending data...")
+				self.socket.sendall(json.dumps(command).encode())
+				data = self.socket.recv(1024).decode()
+				print('Received from server: ' + str(data))
 				pass
 		
 		return CounterResult(tt_socket)

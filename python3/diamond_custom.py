@@ -9,8 +9,13 @@ if __name__ == '__main__':
     
     from hardware.api import TimeTagger as tt
 
-    tt.Counter(0, 1e12, 10)
+    test = tt.Counter(0, 1e12, 10)
     
+    test.getData()
+
+    test.getData()
+
+    test.getData()
     
     #tt.Pulsed(1, 2, 3, 4, 5, 6)
 

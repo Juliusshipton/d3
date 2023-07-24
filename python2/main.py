@@ -24,6 +24,8 @@ print "Listening on port" + str(PORT)
 
 time_tagger = None
 
+counter = None
+
 while True: 
 
 	# 1 receive data and parse into json object for easy access
@@ -40,16 +42,26 @@ while True:
 	# 3 if command is Counter create a counter with the params		
 	if(command_object["Command"] == "Counter"):
 		# create counter 
-		counterA = TimeTagger.Counter(time_tagger, *command_object["Params"])
+		counter = TimeTagger.Counter(time_tagger, *command_object["Params"])
 		# indicate 
 		print(counterA.getData())
 		
 		message = {
 			"CommandRan": "Counter",
-			"GetData": counterA.getData().tolist()
+			"GetData": counter.getData().tolist()
 		}
 		conn.sendall(json.dumps(message).encode())
 
+
+	if(command_object["Command"] == "GetData"):
+		# indicate 
+		print(counterA.getData())
+		
+		message = {
+			"CommandRan": "GetData",
+			"Data": counter.getData().tolist()
+		}
+		conn.sendall(json.dumps(message).encode())
 
 	# Kill check
 	if data_received == 'EXIT':
