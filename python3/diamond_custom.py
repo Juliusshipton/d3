@@ -10,7 +10,17 @@ if __name__ == '__main__':
     from hardware.api import TimeTagger as tt
 
     tt.Counter(1, 2, 3)
-    tt.Pulsed(1, 2, 3, 4, 5, 6)
+    
+    
+    #tt.Pulsed(1, 2, 3, 4, 5, 6)
+
+
+    '''
+    Goal for today
+    - Create a counter that returns a counter object
+    - periodically cal getData() on that object and display the data from python3
+    
+    '''
 
 #     import hardware.api as ha
 
