@@ -20,7 +20,10 @@ print "Python 2 running ..."
 
 
 
-tagger=TimeTagger.TimeTagger('2138000XH1')
+# tagger=TimeTagger.TimeTagger('2138000XH1')
+
+tagger=TimeTagger.TimeTagger('1634000FWP')
+
 
 params = [1, 2, 3]
 
