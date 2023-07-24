@@ -25,7 +25,7 @@ print "Python 2 running ..."
 tagger=TimeTagger.TimeTagger('1634000FWP')
 
 
-params = [0, 1, 10]
+params = [0, 1000, 10]
 
 test = TimeTagger.Counter(tagger, *params)
 
