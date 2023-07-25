@@ -10,52 +10,23 @@ if __name__ == '__main__':
     
     from hardware.api import TimeTagger as tt
 
-    # from traits.api import HasTraits, Int, Str
-    # from traitsui.api import Item, View
-
-    # class MyAppConfig(HasTraits):
-    #     app_name = Str('My App')
-    #     app_version = Str('1.0')
-    #     num_users = Int(10)
-
-    #     traits_view = View(
-    #         Item('app_name', label='Application Name'),
-    #         Item('app_version', label='Version'),
-    #         Item('num_users', label='Number of Users'),
-    #         title='My App Configuration',
-    #         width=400,
-    #         buttons=['OK', 'Cancel'],
-    #     )
-    
-    # config = MyAppConfig()
-    # config.configure_traits()
-
-    # test = tt.Counter(0, 1e12, 10)
-    # test2 = tt.Counter(0, 1e12, 10)
-    
-    # while(True):
-
-    #     test.getData()
-    #     test2.getData()
-
-    #     time.sleep(.01)
-    
-    #tt.Pulsed(1, 2, 3, 4, 5, 6)
-
+    # Photon Time Trace Startup
     from measurements.photon_time_trace1 import PhotonTimeTrace
+    photon_time_trace = PhotonTimeTrace()
+    photon_time_trace.edit_traits()
 
-    test = PhotonTimeTrace()
+    # NIDAQ Test
+    from hardware.nidaq import Scanner
 
-    # test.start()
-    test.configure_traits()
-
-
-    '''
-    Goal for today
-    - Create a counter that returns a counter object
-    - periodically cal getData() on that object and display the data from python3
+    test = Scanner( CounterIn='/Dev1/Ctr1',
+					CounterOut='/Dev1/Ctr0',
+					TickSource='/Dev1/PFI3',
+					AOChannels='/Dev1/ao0:2',
+					x_range=(0.0,200.0),#100x
+					y_range=(0.0,200.0),
+					z_range=(0,100.0),
+					v_range=(-1.00,1.00))
     
-    '''
 
 #     import hardware.api as ha
 
