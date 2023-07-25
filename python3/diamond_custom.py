@@ -47,7 +47,7 @@ if __name__ == '__main__':
     test = PhotonTimeTrace()
 
     # test.start()
-    test.configure_traits_non_blocking()
+    test.configure_traits()
 
 
     '''

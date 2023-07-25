@@ -304,13 +304,13 @@ class PhotonTimeTrace( FreeJob, GetSetItemsMixin ):
             #self.C7 = self._counter7.getData() / self.SecondsPerPoint
             self.C0C1 = self.C0 + self.C1
 
-    def configure_traits_non_blocking(self):
-            # Run the configure_traits() method in a separate thread
-            ui = self.edit_traits(kind='live')
-            ui.handler = StartThreadHandler()
-            UI.invoke_in_main_thread(ui.control.exec_)
-            # t = threading.Thread(target=self.configure_traits)
-            # t.start()
+    # def configure_traits_non_blocking(self):
+    #         # Run the configure_traits() method in a separate thread
+    #         ui = self.edit_traits(kind='live')
+    #         ui.handler = StartThreadHandler()
+    #         UI.invoke_in_main_thread(ui.control.exec_)
+    #         # t = threading.Thread(target=self.configure_traits)
+    #         # t.start()
 
     traits_view = View(         
         HGroup(VGroup(Item('TracePlot', editor=ComponentEditor()),
