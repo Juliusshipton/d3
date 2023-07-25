@@ -18,7 +18,7 @@ if __name__ == '__main__':
         test.getData()
         test2.getData()
 
-        time.sleep(.1)
+        time.sleep(.01)
     
     #tt.Pulsed(1, 2, 3, 4, 5, 6)
 
