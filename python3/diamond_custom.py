@@ -10,17 +10,21 @@ if __name__ == '__main__':
     
     from hardware.api import TimeTagger as tt
 
-    test = tt.Counter(0, 1e12, 10)
-    test2 = tt.Counter(0, 1e12, 10)
+    # test = tt.Counter(0, 1e12, 10)
+    # test2 = tt.Counter(0, 1e12, 10)
     
-    while(True):
+    # while(True):
 
-        test.getData()
-        test2.getData()
+    #     test.getData()
+    #     test2.getData()
 
-        time.sleep(.01)
+    #     time.sleep(.01)
     
     #tt.Pulsed(1, 2, 3, 4, 5, 6)
+
+    from .measurements.photon_time_trace1 import PhotonTimeTrace
+
+    PhotonTimeTrace._run()
 
 
     '''
