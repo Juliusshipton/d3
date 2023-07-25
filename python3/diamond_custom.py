@@ -24,7 +24,9 @@ if __name__ == '__main__':
 
     from measurements.photon_time_trace1 import PhotonTimeTrace
 
-    PhotonTimeTrace._run()
+    test = PhotonTimeTrace()
+
+    test._run()
 
 
     '''
