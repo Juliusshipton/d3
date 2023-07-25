@@ -3,19 +3,21 @@ from hardware.pulse_generator_api import PulseGenerator
 from tools.utility import edit_singleton
 from datetime import date
 import os
+import time
 
 # start confocal including auto_focus tool and Toolbox
 if __name__ == '__main__':
     
     from hardware.api import TimeTagger as tt
 
-    test = tt.Counter(0, 1e12, 10)
+    while(True):
+        test = tt.Counter(0, 1e12, 10)
+        test2 = tt.Counter(0, 1e12, 10)
 
-    test.getData()
+        test.getData()
+        test2.getData()
 
-    test.getData()
-
-    test.getData()
+        time.sleep(1)
     
     #tt.Pulsed(1, 2, 3, 4, 5, 6)
 
