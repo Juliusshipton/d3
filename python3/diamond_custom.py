@@ -22,7 +22,7 @@ if __name__ == '__main__':
     
     #tt.Pulsed(1, 2, 3, 4, 5, 6)
 
-    from .measurements.photon_time_trace1 import PhotonTimeTrace
+    from measurements.photon_time_trace1 import PhotonTimeTrace
 
     PhotonTimeTrace._run()
 
