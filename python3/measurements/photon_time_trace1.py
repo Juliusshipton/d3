@@ -316,7 +316,7 @@ class PhotonTimeTrace( FreeJob, GetSetItemsMixin ):
                         Item ('SecondsPerPoint'),
                         Item ('RefreshRate'),
                         title='Counter', width=800, height=600, buttons=[], resizable=True,
-                        handler=StartThreadHandler
+                        # handler=StartThreadHandler
                   )
 
 
