@@ -5,7 +5,7 @@ import pickle as cPickle
 from traits.api import SingletonHasTraits, HasTraits, Trait, Instance, Property, Int, Float, Range,\
                                  Bool, Array, String, Str, Enum, Button, Tuple, List, on_trait_change,\
                                  cached_property, DelegatesTo
-from traitsui.api import View, Item, Group, HGroup, VGroup, Tabbed, EnumEditor
+from traitsui.api import View, Item, Group, HGroup, VGroup, Tabbed, EnumEditor, UI
 
 from traitsui.file_dialog import save_file
 from traitsui.menu import Action, Menu, MenuBar
@@ -306,8 +306,11 @@ class PhotonTimeTrace( FreeJob, GetSetItemsMixin ):
 
     def configure_traits_non_blocking(self):
             # Run the configure_traits() method in a separate thread
-            t = threading.Thread(target=self.configure_traits)
-            t.start()
+            ui = self.edit_traits(kind='live')
+            ui.handler = StartThreadHandler()
+            UI.invoke_in_main_thread(ui.control.exec_)
+            # t = threading.Thread(target=self.configure_traits)
+            # t.start()
 
     traits_view = View(         
         HGroup(VGroup(Item('TracePlot', editor=ComponentEditor()),
