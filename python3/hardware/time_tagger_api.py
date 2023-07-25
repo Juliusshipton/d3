@@ -15,10 +15,11 @@ class TimeTagger():
 	def Counter(tt_socket, channel: int, pSecPerPoint: int, traceLength: int):
 
 		params = [channel, int(pSecPerPoint), traceLength]
-
+		unique_id = TimeTagger.generate_random_id(10)
 		command = {
 			"TimeTaggerSerial": TimeTagger.serial_number,
 			"Command": "Counter",
+			"Id": unique_id, 
 			"Params": params,
 		}
 
@@ -30,14 +31,16 @@ class TimeTagger():
 
 		# return an object that contains a method called getData()
 		class CounterResult:
-			def __init__(self, socket):
+			def __init__(self, socket, id):
 				self.socket = socket
+				self.id = id
 
 			def getData(self):
 				
 				command = {
 					"TimeTaggerSerial": TimeTagger.serial_number,
 					"Command": "GetData",
+					"Id": self.id,
 				}
 
 				#This block of sends the command and stores received data in data string
@@ -47,7 +50,7 @@ class TimeTagger():
 				print('Received from server: ' + str(data))
 				pass
 		
-		return CounterResult(tt_socket)
+		return CounterResult(tt_socket, unique_id)
 
 
 	# Only way pulsed is called in our code is with 6 integer parameters
@@ -60,4 +63,13 @@ class TimeTagger():
 		data = tt_socket.recv(1024).decode()
 		print('Received from server: ' + data)
 		# TODO: Return a reference class that contains a method .getData(), and populate with data
+
+
+	def generate_random_id(length):
+		import random
+		import string
+		
+		"""Generate a random ID string of a given length."""
+		letters = string.ascii_lowercase + string.ascii_uppercase + string.digits
+		return ''.join(random.choice(letters) for _ in range(length))
 

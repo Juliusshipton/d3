@@ -10,7 +10,7 @@ if __name__ == '__main__':
     from hardware.api import TimeTagger as tt
 
     test = tt.Counter(0, 1e12, 10)
-    
+
     test.getData()
 
     test.getData()

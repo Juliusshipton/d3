@@ -24,7 +24,8 @@ print "Listening on port" + str(PORT)
 
 time_tagger = None
 
-counter = None
+# dictionary accessed by id
+counters = {}
 
 while True: 
 
@@ -39,31 +40,35 @@ while True:
 		print serial_number
 		time_tagger = TimeTagger.TimeTagger(str(serial_number))
 
-	# 3 if command is Counter create a counter with the params		
+	# 3 if command is Counter create a counter with the params, and set in dictionary by id key		
 	if(command_object["Command"] == "Counter"):
-		# create counter 
-		counter = TimeTagger.Counter(time_tagger, *command_object["Params"])
-		# indicate 
-		print(counter.getData())
 		
+		# create counter 
+		counters[command_object["Id"]] = TimeTagger.Counter(time_tagger, *command_object["Params"])
+		
+		# indicate 
+		print(counters[command_object["Id"]].getData())
+		
+		# create and return message
 		message = {
 			"CommandRan": "Counter",
 			"GetData": counter.getData().tolist()
 		}
 		conn.sendall(json.dumps(message).encode())
 
-
+	# If command is get data, get the correct counter to call get data from dictionary by id
 	if(command_object["Command"] == "GetData"):
-		# indicate 
+		
+		# get counter from dictionary by id 
+		counter = counters[command_object["Id"]]
+
+		# console log
 		print(counter.getData())
 		
+		# create and return message
 		message = {
 			"CommandRan": "GetData",
 			"Data": counter.getData().tolist()
 		}
 		conn.sendall(json.dumps(message).encode())
 
-	# Kill check
-	if data_received == 'EXIT':
-		s.close()
-		sys.exit()
