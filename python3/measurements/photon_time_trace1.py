@@ -32,6 +32,7 @@ class StartThreadHandler( GetSetItemsHandler ):
 
     def init(self, info):
         info.object.start()
+        return True
         
 class PhotonTimeTrace( FreeJob, GetSetItemsMixin ):
 
