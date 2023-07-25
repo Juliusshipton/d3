@@ -304,16 +304,18 @@ class PhotonTimeTrace( FreeJob, GetSetItemsMixin ):
             #self.C7 = self._counter7.getData() / self.SecondsPerPoint
             self.C0C1 = self.C0 + self.C1
 
-    traits_view = View( HGroup(VGroup(Item('TracePlot', editor=ComponentEditor()),
-                                     Item('digits_plot', editor=ComponentEditor())),
-                               #VGroup(Item('c_enable0'),Item('c_enable1'),Item('c_enable2'),Item('c_enable3'),Item('c_enable4'),Item('c_enable5'),Item('c_enable6'),Item('c_enable7'),Item('sum_enable'))
-                               VGroup(Item('c_enable0'),Item('c_enable1'),Item('c_enable2'),Item('c_enable3'),Item('c_enable4'),Item('c_enable5'),Item('c_enable6'),Item('sum_enable'))
-                        ),
+    traits_view = View( 
+        
+        # HGroup(VGroup(Item('TracePlot', editor=ComponentEditor()),
+        #                              Item('digits_plot', editor=ComponentEditor())),
+        #                        #VGroup(Item('c_enable0'),Item('c_enable1'),Item('c_enable2'),Item('c_enable3'),Item('c_enable4'),Item('c_enable5'),Item('c_enable6'),Item('c_enable7'),Item('sum_enable'))
+        #                        VGroup(Item('c_enable0'),Item('c_enable1'),Item('c_enable2'),Item('c_enable3'),Item('c_enable4'),Item('c_enable5'),Item('c_enable6'),Item('sum_enable'))
+        #                 ),
                         Item('digi_channel', style='custom'),
                         Item('TraceLength'),
                         Item ('SecondsPerPoint'),
                         Item ('RefreshRate'),
-                        title='Counter', width=int(800), height=600, buttons=[], resizable=True,
+                        title='Counter', width=800, height=600, buttons=[], resizable=True,
                         handler=StartThreadHandler
                   )
 
