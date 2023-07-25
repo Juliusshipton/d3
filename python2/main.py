@@ -52,7 +52,7 @@ while True:
 		# create and return message
 		message = {
 			"CommandRan": "Counter",
-			"GetData": counter.getData().tolist()
+			"GetData": counters[command_object["Id"].getData().tolist()
 		}
 		conn.sendall(json.dumps(message).encode())
 
