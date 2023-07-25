@@ -2,7 +2,7 @@
 
 print "Running Python2 .."
 
-from NIDAQ import nidaq
+from NIDAQ.nidaq import Scanner
 
 
 test = Scanner( CounterIn='/Dev1/Ctr1',
