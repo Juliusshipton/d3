@@ -10,6 +10,22 @@ if __name__ == '__main__':
     
     from hardware.api import TimeTagger as tt
 
+    from traits.api import HasTraits, Int, Str
+    from traitsui.api import Item, View
+
+    app_name = Str('My App')
+    app_version = Str('1.0')
+    num_users = Int(10)
+
+    traits_view = View(
+        Item('app_name', label='Application Name'),
+        Item('app_version', label='Version'),
+        Item('num_users', label='Number of Users'),
+        title='My App Configuration',
+        width=400,
+        buttons=['OK', 'Cancel'],
+    )
+
     # test = tt.Counter(0, 1e12, 10)
     # test2 = tt.Counter(0, 1e12, 10)
     
@@ -22,11 +38,11 @@ if __name__ == '__main__':
     
     #tt.Pulsed(1, 2, 3, 4, 5, 6)
 
-    from measurements.photon_time_trace1 import PhotonTimeTrace
+    # from measurements.photon_time_trace1 import PhotonTimeTrace
 
-    test = PhotonTimeTrace()
+    # test = PhotonTimeTrace()
 
-    test.start()
+    # test.start()
 
 
     '''
