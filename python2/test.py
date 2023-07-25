@@ -2,10 +2,8 @@
 
 print "Running Python2 .."
 
-import os
-os.path.append('../python3')
+from NIDAQ import nidaq
 
-from python3.hardware.nidaq import Scanner
 
 test = Scanner( CounterIn='/Dev1/Ctr1',
 					CounterOut='/Dev1/Ctr0',
