@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
     test = PhotonTimeTrace()
 
-    test._run()
+    test.start()
 
 
     '''

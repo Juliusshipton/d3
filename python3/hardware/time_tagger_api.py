@@ -5,6 +5,7 @@ This will be the Api class for TimeTagger that will send commands and parameters
 
 '''
 import json
+import numpy as np
 
 
 class TimeTagger():
@@ -46,9 +47,15 @@ class TimeTagger():
 				#This block of sends the command and stores received data in data string
 				print("Sending data...")
 				self.socket.sendall(json.dumps(command).encode())
-				data = self.socket.recv(1024).decode()
+				data_received = self.socket.recv(1024).decode()
 				print('Received from server: ' + str(data))
-				pass
+
+				result_object = json.loads(data_received)
+
+				result_list = result_object["Data"]
+
+				return np.array(result_list)
+
 		
 		return CounterResult(tt_socket, unique_id)
 
