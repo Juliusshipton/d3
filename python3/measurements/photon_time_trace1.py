@@ -1,5 +1,4 @@
 import numpy
-# PYTHON3 EDIT
 import pickle as cPickle
 
 # enthought library imports
@@ -304,6 +303,11 @@ class PhotonTimeTrace( FreeJob, GetSetItemsMixin ):
             self.C6 = self._counter6.getData() / self.SecondsPerPoint
             #self.C7 = self._counter7.getData() / self.SecondsPerPoint
             self.C0C1 = self.C0 + self.C1
+
+    def configure_traits_non_blocking(self):
+            # Run the configure_traits() method in a separate thread
+            t = threading.Thread(target=self.configure_traits)
+            t.start()
 
     traits_view = View(         
         HGroup(VGroup(Item('TracePlot', editor=ComponentEditor()),
