@@ -27,7 +27,7 @@ import logging
 
 from hardware.api import Scanner
 
-scanner = Scanner()
+scanner = None
 
 
 class Confocal( ManagedJob, GetSetItemsMixin ):
@@ -90,9 +90,9 @@ class Confocal( ManagedJob, GetSetItemsMixin ):
                    'return_speed', 'bidirectional', 'history', 'image', 'z_label_text',
                    'resolution', 'x', 'x1', 'x2', 'y', 'y1', 'y2', 'z', 'z1', 'z2']
 
-    def __init__(self,scanner):
+    def __init__(self):
         super(Confocal, self).__init__()
-        self.scanner=scanner
+        self.scanner= Scanner()
         self.X = numpy.linspace(scanner.getXRange()[0], scanner.getXRange()[-1], self.resolution+1)
         self.Y = numpy.linspace(scanner.getYRange()[0], scanner.getYRange()[-1], self.resolution+1)
         self.image = numpy.zeros((len(self.X), len(self.Y)))

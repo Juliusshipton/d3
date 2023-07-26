@@ -21,26 +21,25 @@ import logging
 import time
 from .pulse_generator_api import PulseGenerator
 
-class Scanner(  ):
-	def getXRange(self):
-		return (0.,100.)
-	def getYRange(self):
-		return (0.,100.)
-	def getZRange(self):
-		return (-20.,20.)
-	def setx(self, x):
-		pass
-	def sety(self, y):
-		pass
-	def setz(self, z):
-		pass
-	def setPosition(self, x, y, z):
-		"""Move stage to x, y, z"""
-		pass
-	def scanLine(self, Line, SecondsPerPoint, return_speed=None):
-		time.sleep(0.1)
-		return (1000*np.sin(Line[0,:])*np.sin(Line[1,:])*np.exp(-Line[2,:]**2)).astype(int)
-		#return np.random.random(Line.shape[1])
+# TimeTagger Singleton Initialization
+from . import time_tagger_control
+TimeTagger= time_tagger_control.TimeTaggerControl()
+
+# NIDAQ Scanner Initialization
+def Scanner():
+	from .nidaq import Scanner
+	
+	# PYTHON3 EDIT Uncomment when NIDAC plugged in
+	return Scanner( CounterIn='/Dev1/Ctr1',
+					CounterOut='/Dev1/Ctr0',
+					TickSource='/Dev1/PFI3',
+					AOChannels='/Dev1/ao0:2',
+					x_range=(0.0,200.0),
+					y_range=(0.0,200.0),
+					z_range=(0,100.0),
+					v_range=(-1.00,1.00))
+
+
 
 class Counter(  ):
 	def configure(self, n, SecondsPerPoint, DutyCycle=0.8):
@@ -81,20 +80,6 @@ class RFSource():
 
 from tools.utility import singleton
 
-@singleton
-def Scanner():
-	from .nidaq import Scanner
-	
-	# PYTHON3 EDIT Uncomment when NIDAC plugged in
-	# return Scanner( CounterIn='/Dev1/Ctr1',
-	# 				CounterOut='/Dev1/Ctr0',
-	# 				TickSource='/Dev1/PFI3',
-	# 				AOChannels='/Dev1/ao0:2',
-	# 				x_range=(0.0,200.0),#100x
-	# 				y_range=(0.0,200.0),
-	# 				z_range=(0,100.0),
-	# 				v_range=(-1.00,1.00))
-
 ScnnerA=Scanner
 
 def DigitalOut():
@@ -109,11 +94,6 @@ def Counter():
 							  TickSource='/Dev1/PFI3' )
 
 CounterA=Counter
-
-
-# def CountTask(bin_width, length):
-#     return  TimeTagger.Counter(0,int(bin_width*1e12), length)
-
 
 @singleton
 def Microwave():
@@ -133,19 +113,4 @@ def PulseGenerator():
 	#return PulseGeneratorClass(serial='1729000I9M',channel_map={'green':0,'aom':0, 'mw_x':1, 'mw':1,'rf':2,'laser':3,'sequence':4, 'blue':7})
 	return PulseGenerator.__init__(serial='2021000TCD',channel_map={'green':0,'aom':0, 'mw_x':1, 'mw':1,'rf':2,'laser':3,'sequence':4, 'mw_2':5, 'test':6, 'blue':7, 'flip':8})
 
-# PYTHON3 EDIT
-from .time_tagger_api import TimeTagger as tt
-#tagger=tt.TimeTagger('1634000FWQ')
-#tagger=tt.TimeTagger('2138000XIC')
-
-# tagger=tt.TimeTagger('1634000FWP')
-
-
-from . import time_tagger_control
-
-TimeTagger= time_tagger_control.TimeTaggerControl()
-
-
-
-# from time_tagger_control import TimeTaggerControl as TimeTagger
 

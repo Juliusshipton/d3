@@ -8,24 +8,30 @@ import time
 # start confocal including auto_focus tool and Toolbox
 if __name__ == '__main__':
     
-    from hardware.api import TimeTagger as tt
 
-    # Photon Time Trace Startup
-    from measurements.photon_time_trace1 import PhotonTimeTrace
-    photon_time_trace = PhotonTimeTrace()
-    photon_time_trace.edit_traits()
+    # # Photon Time Trace Startup
+    # from measurements.photon_time_trace1 import PhotonTimeTrace
+    # photon_time_trace = PhotonTimeTrace()
+    # photon_time_trace.edit_traits()
+
+    # # start confocal including auto_focus tool
+    # from measurements.confocal import Confocal
+    # confocal = Confocal()
+    # confocal.edit_traits()
+
 
     # NIDAQ Test
-    # from hardware.nidaq import Scanner
+    import nidaqmx
 
-    # test = Scanner( CounterIn='/Dev1/Ctr1',
-	# 				CounterOut='/Dev1/Ctr0',
-	# 				TickSource='/Dev1/PFI3',
-	# 				AOChannels='/Dev1/ao0:2',
-	# 				x_range=(0.0,200.0),#100x
-	# 				y_range=(0.0,200.0),
-	# 				z_range=(0,100.0),
-	# 				v_range=(-1.00,1.00))
+    # Create a new instance of the nidaqmx.System() class
+    system = nidaqmx.System()
+
+    # Get a list of all available NI-DAQmx devices
+    devices = system.devices
+
+    # Print the names of all available devices
+    for device in devices:
+        print(device.name)
     
 
 #     import hardware.api as ha
