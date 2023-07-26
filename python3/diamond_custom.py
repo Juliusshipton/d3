@@ -24,7 +24,7 @@ if __name__ == '__main__':
     import nidaqmx
 
     # Create a new instance of the nidaqmx.System() class
-    system = nidaqmx.System()
+    system = nidaqmx.system.System.local()
 
     # Get a list of all available NI-DAQmx devices
     devices = system.devices
