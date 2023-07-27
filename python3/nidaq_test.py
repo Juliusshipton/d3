@@ -24,7 +24,7 @@ COTask.co_channels.add_co_pulse_chan_freq(
     )
 
 COTask.timing.cfg_samp_clk_timing(
-        # source='OnboardClock',
+        source='OnboardClock',
         rate=10000.0,              # Sample rate in samples per second
         samps_per_chan=10000,    # Number of samples to acquire per channel
         sample_mode=nidaqmx.constants.AcquisitionType.FINITE, # Continuous acquisition mode
@@ -36,7 +36,11 @@ print("Pulse Train Counter Configured ...")
 
 print("Starting Pulse Train Counter ...")
 COTask.start()
+COTask.wait_until_done()
 
+print("Stoping Pulse Train Counter ...")
+COTask.stop()
+COTask.close()
 
 
 
