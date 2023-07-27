@@ -232,12 +232,12 @@ class MultiBoard( CounterBoard ):
 		
 		self.AOTask = nidaqmx.Task()
 		
-		self.AOTask.ao_channels.add_ao_voltage_chan(
+		CHK ( self.AOTask.ao_channels.add_ao_voltage_chan(
 			AOChannels,		      
 			'',
 			v_range[0],
 			v_range[1],
-			nidaqmx.constants.VoltageUnits.VOLTS )
+			nidaqmx.constants.VoltageUnits.VOLTS ) )
 		# CHK(  dll.DAQmxCreateTask('', ctypes.byref(self.AOTask))  )
 		# CHK(  dll.DAQmxCreateAOVoltageChan( self.AOTask,
 		# 									self._AODevice, '',
@@ -250,45 +250,57 @@ class MultiBoard( CounterBoard ):
 
 	def setAOLength(self, N):
 		if N == 1:
-			CHK ( self.AOTask.timing.cfg_samp_clk_timing(rate=1, sample_mode=nidaqmx.constants.AcquisitionType.FINITE, samps_per_chan=1) )
+			CHK ( self.AOTask.timing.cfg_samp_clk_timing(rate=1, sample_mode=nidaqmx.constants.SampleTimingType.FINITE, samps_per_chan=1) )
+			self.AOTask.timing.samp_timing_type = nidaqmx.constants.SampleTimingType.ON_DEMAND
 			# CHK( dll.DAQmxSetSampTimingType( self.AOTask, DAQmx_Val_OnDemand)  )
 		else:
 			#CHK ( self.AOTask.timing.cfg_samp_clk_timing(rate=1, sample_mode=nidaqmx.constants.AcquisitionType.CONTINUOUS, active_edge=nidaqmx.constants.Edge.RISING ) )
 			# CHK( dll.DAQmxSetSampTimingType( self.AOTask, DAQmx_Val_SampClk)  )
 			if N < numpy.inf:
 
-				self.AOTask.timing.cfg_samp_clk_timing(
-					rate=self._f, 
+				CHK ( self.AOTask.timing.cfg_samp_clk_timing(
+					rate=ctypes.c_double(self._f), 
 					source = self._PulseTrain,
-					sample_mode=nidaqmx.constants.AcquisitionType.CONTINUOUS, 
-					active_edge=nidaqmx.constants.Edge.FALLING )
+					sample_mode=nidaqmx.constants.AcquisitionType.FINITE_SAMPLES, 
+					active_edge=nidaqmx.constants.Edge.FALLING,
+					samps_per_chan= ctypes.c_ulonglong(N)) )
 				
-				CHK( dll.DAQmxCfgSampClkTiming( self.AOTask,
-												self._PulseTrain,
-												ctypes.c_double(self._f),
-												DAQmx_Val_Falling, 
-												DAQmx_Val_FiniteSamps,
-												ctypes.c_ulonglong(N)) )
+				# CHK( dll.DAQmxCfgSampClkTiming( self.AOTask,
+				# 								self._PulseTrain,
+				# 								ctypes.c_double(self._f),
+				# 								DAQmx_Val_Falling, 
+				# 								DAQmx_Val_FiniteSamps,
+				# 								ctypes.c_ulonglong(N)) )
 		self._AOLength = N
 
 	def AOLength(self):
 		return self._AOLength
 
 	def StartAO(self):
-		CHK( dll.DAQmxStartTask(self.AOTask) )
+		CHK( self.AOTask.start() )
+		# CHK( dll.DAQmxStartTask(self.AOTask) )
 
 	def StopAO(self):
-		CHK( dll.DAQmxStopTask(self.AOTask) )
+		CHK( self.AOTask.stop() )
+		# CHK( dll.DAQmxStopTask(self.AOTask) )
 
 	def WriteAO(self, data, start=False):
-		CHK( dll.DAQmxWriteAnalogF64( self.AOTask,
-									  ctypes.c_int32(self._AOLength),
-									  start,
-									  ctypes.c_double(self._RWTimeout),
-									  DAQmx_Val_GroupByChannel,
-									  data.ctypes.data_as(c_float64_p),
-									  ctypes.byref(self._AONwritten), None) )
-		return self._AONwritten.value
+
+		written_value = self.AOTask.write(
+			data,
+			auto_start = start,
+			timeout = self._RWTimeout,
+		)
+
+		# CHK( dll.DAQmxWriteAnalogF64( self.AOTask,
+		# 							  ctypes.c_int32(self._AOLength),
+		# 							  start,
+		# 							  ctypes.c_double(self._RWTimeout),
+		# 							  DAQmx_Val_GroupByChannel,
+		# 							  data.ctypes.data_as(c_float64_p),
+		# 							  ctypes.byref(self._AONwritten), None) )
+		# return self._AONwritten.value
+		return written_value
 	
 
 class Scanner( MultiBoard ):

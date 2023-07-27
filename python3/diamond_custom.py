@@ -35,7 +35,7 @@ if __name__ == '__main__':
     test =  Scanner( CounterIn='/Dev1/Ctr1',
 					CounterOut='/Dev1/Ctr0',
 					TickSource='/Dev1/PFI3',
-					AOChannels='/Dev1/ao0:2',
+					AOChannels='/Dev1/ao3',
 					x_range=(0.0,200.0),
 					y_range=(0.0,200.0),
 					z_range=(0,100.0),
