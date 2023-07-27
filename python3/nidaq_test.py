@@ -29,6 +29,8 @@ COTask.timing.cfg_samp_clk_timing(
         sample_mode=nidaqmx.constants.AcquisitionType.CONTINUOUS, # Continuous acquisition mode
     )
 
+COTask.out_stream.output_buf_size = 50
+
 print("Pulse Train Counter Configured ...")
 
 print("Starting Pulse Train Counter ...")
