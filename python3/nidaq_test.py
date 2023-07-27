@@ -23,6 +23,12 @@ COTask.co_channels.add_co_pulse_chan_freq(
     duty_cycle=0.9 # Is the width of the pulse divided by the pulse period. NI-DAQmx uses this ratio combined with frequency to determine pulse width and the interval between pulses.
     )
 
+COTask.timing.cfg_samp_clk_timing(
+        rate=1000,              # Sample rate in samples per second
+        samps_per_chan=1000,    # Number of samples to acquire per channel
+        sample_mode=nidaqmx.constants.AcquisitionType.CONTINUOUS, # Continuous acquisition mode
+    )
+
 print("Pulse Train Counter Configured ...")
 
 print("Starting Pulse Train Counter ...")
