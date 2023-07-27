@@ -20,7 +20,7 @@ COTask.co_channels.add_co_pulse_chan_freq(
     idle_state = DAQmx_Val_Low, # Specifies the resting state of the output terminal
     initial_delay = ctypes.c_double(0), # Is the amount of time in seconds to wait before generating the first pulse.
     freq=1000.0, # Specifies at what frequency to generate pulses.
-    duty_cycle=0.9 # Is the width of the pulse divided by the pulse period. NI-DAQmx uses this ratio combined with frequency to determine pulse width and the interval between pulses.
+    duty_cycle=0.1 # Is the width of the pulse divided by the pulse period. NI-DAQmx uses this ratio combined with frequency to determine pulse width and the interval between pulses.
     )
 
 print("Pulse Train Counter Configured ...")
