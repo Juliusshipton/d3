@@ -22,19 +22,33 @@ if __name__ == '__main__':
 
     # NIDAQ Test
     import nidaqmx
-
-    # Create a new instance of the nidaqmx.System() class
-    system = nidaqmx.system.System.local()
-
-    print(system.driver_version)
+    # system = nidaqmx.system.System.local()
+    # print(system.driver_version)
+    # devices = system.devices
+    # for device in devices:
+    #     print(device.name)
     
-    # Get a list of all available NI-DAQmx devices
-    devices = system.devices
 
-    # Print the names of all available devices
-    for device in devices:
-        print(device.name)
-    
+    from hardware.nidaq import Scanner
+	
+	# PYTHON3 EDIT Uncomment when NIDAC plugged in
+    test =  Scanner( CounterIn='/Dev1/Ctr1',
+					CounterOut='/Dev1/Ctr0',
+					TickSource='/Dev1/PFI3',
+					AOChannels='/Dev1/ao0:2',
+					x_range=(0.0,200.0),
+					y_range=(0.0,200.0),
+					z_range=(0,100.0),
+					v_range=(-1.00,1.00))
+
+
+
+
+
+
+
+
+
 
 #     import hardware.api as ha
 

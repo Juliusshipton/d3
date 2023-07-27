@@ -21,6 +21,8 @@ import ctypes
 import numpy
 import time
 
+import nidaqmx
+
 dll = ctypes.windll.LoadLibrary('nicaiu.dll')
 
 DAQmx_Val_Cfg_Default             = ctypes.c_int32(-1)
@@ -225,29 +227,47 @@ class MultiBoard( CounterBoard ):
 	_DefaultAOLength = 1000
 
 	def __init__(self, CounterIn, CounterOut, TickSource, AOChannels, v_range=(0.,10.)):
-		CounterBoard.__init__(self, CounterIn, CounterOut, TickSource)
+		# CounterBoard.__init__(self, CounterIn, CounterOut, TickSource)
 		self._AODevice = AOChannels
-		self.AOTask = ctypes.c_ulong()
-		CHK(  dll.DAQmxCreateTask('', ctypes.byref(self.AOTask))  )
-		CHK(  dll.DAQmxCreateAOVoltageChan( self.AOTask,
-											self._AODevice, '',
-											ctypes.c_double(v_range[0]),
-											ctypes.c_double(v_range[1]),
-											DAQmx_Val_Volts,'')    )
+		
+		self.AOTask = nidaqmx.Task()
+		
+		self.AOTask.ao_channels.add_ao_voltage_chan(
+			AOChannels,		      
+			'',
+			v_range[0],
+			v_range[1],
+			nidaqmx.constants.VoltageUnits.VOLTS )
+		# CHK(  dll.DAQmxCreateTask('', ctypes.byref(self.AOTask))  )
+		# CHK(  dll.DAQmxCreateAOVoltageChan( self.AOTask,
+		# 									self._AODevice, '',
+		# 									ctypes.c_double(v_range[0]),
+		# 									ctypes.c_double(v_range[1]),
+		# 									DAQmx_Val_Volts,'')    )
 		self._AONwritten = ctypes.c_int32()
 
 		self.setAOLength(self._DefaultAOLength)
 
 	def setAOLength(self, N):
 		if N == 1:
-			CHK( dll.DAQmxSetSampTimingType( self.AOTask, DAQmx_Val_OnDemand)  )
+			CHK ( self.AOTask.timing.cfg_samp_clk_timing(rate=1, sample_mode=nidaqmx.constants.AcquisitionType.FINITE, samps_per_chan=1) )
+			# CHK( dll.DAQmxSetSampTimingType( self.AOTask, DAQmx_Val_OnDemand)  )
 		else:
-			CHK( dll.DAQmxSetSampTimingType( self.AOTask, DAQmx_Val_SampClk)  )
+			#CHK ( self.AOTask.timing.cfg_samp_clk_timing(rate=1, sample_mode=nidaqmx.constants.AcquisitionType.CONTINUOUS, active_edge=nidaqmx.constants.Edge.RISING ) )
+			# CHK( dll.DAQmxSetSampTimingType( self.AOTask, DAQmx_Val_SampClk)  )
 			if N < numpy.inf:
+
+				self.AOTask.timing.cfg_samp_clk_timing(
+					rate=self._f, 
+					source = self._PulseTrain,
+					sample_mode=nidaqmx.constants.AcquisitionType.CONTINUOUS, 
+					active_edge=nidaqmx.constants.Edge.FALLING )
+				
 				CHK( dll.DAQmxCfgSampClkTiming( self.AOTask,
 												self._PulseTrain,
 												ctypes.c_double(self._f),
-												DAQmx_Val_Falling, DAQmx_Val_FiniteSamps,
+												DAQmx_Val_Falling, 
+												DAQmx_Val_FiniteSamps,
 												ctypes.c_ulonglong(N)) )
 		self._AOLength = N
 

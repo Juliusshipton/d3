@@ -1,6 +1,6 @@
 
 
-print "Running Python2 .."
+print("Running Python2 ..")
 
 from NIDAQ.nidaq import Scanner
 
