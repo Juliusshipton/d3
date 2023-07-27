@@ -26,7 +26,7 @@ COTask.co_channels.add_co_pulse_chan_freq(
 print("Pulse Train Counter Configured ...")
 
 print("Starting Pulse Train Counter ...")
-# COTask.start()
+COTask.start()
 
 
 
