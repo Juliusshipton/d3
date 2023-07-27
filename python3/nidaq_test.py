@@ -19,18 +19,19 @@ COTask.co_channels.add_co_pulse_chan_freq(
     units = nidaqmx.constants.FrequencyUnits.HZ, # Frequency unit
     idle_state = DAQmx_Val_Low, # Specifies the resting state of the output terminal
     initial_delay = ctypes.c_double(0), # Is the amount of time in seconds to wait before generating the first pulse.
-    freq=1000.0, # Specifies at what frequency to generate pulses.
-    duty_cycle=0.5 # Is the width of the pulse divided by the pulse period. NI-DAQmx uses this ratio combined with frequency to determine pulse width and the interval between pulses.
+    freq = 1000.0, # Specifies at what frequency to generate pulses.
+    duty_cycle = 0.5 # Is the width of the pulse divided by the pulse period. NI-DAQmx uses this ratio combined with frequency to determine pulse width and the interval between pulses.
     )
 
 COTask.timing.cfg_samp_clk_timing(
-    source='OnboardClock',
-    rate=10000.0,              # Sample rate in samples per second
-    samps_per_chan=10000,    # Number of samples to acquire per channel
-    sample_mode=nidaqmx.constants.AcquisitionType.FINITE, # Continuous acquisition mode
+    source = 'OnboardClock',
+    rate = 10000.0, # Sample rate in samples per second
+    samps_per_chan = 10000, # Number of samples to acquire per channel
+    sample_mode = nidaqmx.constants.AcquisitionType.FINITE, # Continuous acquisition mode
     )
 
 COTask.out_stream.output_buf_size = 50
+COTask.timing.samp_clk_src = 'OnboardClock'
 
 print("Pulse Train Counter Configured ...")
 
