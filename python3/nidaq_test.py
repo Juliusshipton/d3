@@ -16,7 +16,7 @@ print("Pulse Train Counter Created ...")
 COTask.co_channels.add_co_pulse_chan_freq(
     'Dev1/Ctr2', # Specifies the names of the counters to use to create the virtual channels. 
     '', # Optional to assign to channel
-    unit = nidaqmx.constants.FrequencyUnits.HZ, # Frequency unit
+    units = nidaqmx.constants.FrequencyUnits.HZ, # Frequency unit
     idle_state = DAQmx_Val_Low, # Specifies the resting state of the output terminal
     initial_delay = ctypes.c_double(0), # Is the amount of time in seconds to wait before generating the first pulse.
     freq=1000.0, # Specifies at what frequency to generate pulses.
