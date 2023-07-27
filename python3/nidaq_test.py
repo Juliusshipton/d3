@@ -24,10 +24,10 @@ COTask.co_channels.add_co_pulse_chan_freq(
     )
 
 COTask.timing.cfg_samp_clk_timing(
-        source='OnboardClock',
-        rate=10000.0,              # Sample rate in samples per second
-        samps_per_chan=10000,    # Number of samples to acquire per channel
-        sample_mode=nidaqmx.constants.AcquisitionType.FINITE, # Continuous acquisition mode
+    source='OnboardClock',
+    rate=10000.0,              # Sample rate in samples per second
+    samps_per_chan=10000,    # Number of samples to acquire per channel
+    sample_mode=nidaqmx.constants.AcquisitionType.FINITE, # Continuous acquisition mode
     )
 
 COTask.out_stream.output_buf_size = 50
