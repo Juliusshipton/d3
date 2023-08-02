@@ -12,6 +12,6 @@ test = Scanner( CounterIn='/Dev1/Ctr1',
 					x_range=(0.0,200.0),#100x
 					y_range=(0.0,200.0),
 					z_range=(0,100.0),
-					v_range=(-1.00,1.00))
+					v_range=(-1.0,10.00))
 
 print("NIDAQ Scanner Successfully Created ...")

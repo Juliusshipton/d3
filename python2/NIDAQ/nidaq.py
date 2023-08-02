@@ -96,8 +96,8 @@ class CounterBoard:
 		self._TickSource = TickSource #the signal: ticks coming from the APDs
 
 		# nidaq Tasks
-		self.COTask = ctypes.c_ulong()
-		self.CITask = ctypes.c_ulong()
+		self.COTask = dll.TaskHandle()
+		self.CITask = dll.TaskHandle()
 		CHK(  dll.DAQmxCreateTask('', ctypes.byref(self.COTask))  )
 		CHK(  dll.DAQmxCreateTask('', ctypes.byref(self.CITask))  )
 
