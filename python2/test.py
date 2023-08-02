@@ -1,6 +1,6 @@
 
 
-print("Running Python2 ..")
+print("Running Python3 ..")
 
 from NIDAQ.nidaq import Scanner
 
@@ -13,3 +13,5 @@ test = Scanner( CounterIn='/Dev1/Ctr1',
 					y_range=(0.0,200.0),
 					z_range=(0,100.0),
 					v_range=(-1.00,1.00))
+
+print("NIDAQ Scanner Successfully Created ...")
