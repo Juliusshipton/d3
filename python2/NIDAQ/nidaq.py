@@ -232,7 +232,7 @@ class MultiBoard( CounterBoard ):
 	def __init__(self, CounterIn, CounterOut, TickSource, AOChannels, v_range=(0.,10.)):
 		CounterBoard.__init__(self, CounterIn, CounterOut, TickSource)
 		self._AODevice = AOChannels
-		self.AOTask = ctypes.c_ulong()
+		self.AOTask = dll.TaskHandle()
 		CHK(  dll.DAQmxCreateTask('', ctypes.byref(self.AOTask))  )
 		CHK(  dll.DAQmxCreateAOVoltageChan( self.AOTask,
 											self._AODevice, '',
@@ -280,7 +280,7 @@ class AOBoard():
 	
 	def __init__(self, AOChannels):
 		self._AODevice = AOChannels
-		self.Task = ctypes.c_ulong()
+		self.Task = dll.TaskHandle()
 		CHK(  dll.DAQmxCreateTask('', ctypes.byref(self.Task))  )
 		CHK(  dll.DAQmxCreateAOVoltageChan( self.Task,
 											self._AODevice, '',
