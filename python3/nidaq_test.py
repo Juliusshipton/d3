@@ -1,5 +1,5 @@
-import ctypes
-import nidaqmx
+# import ctypes
+# import nidaqmx
 
 print("Running python3 NIDAQ Test ...")
 
