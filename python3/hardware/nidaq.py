@@ -23,7 +23,9 @@ import time
 
 import nidaqmx
 
-dll = ctypes.windll.LoadLibrary('nicaiu.dll')
+import PyDAQmx as dll
+
+# dll = ctypes.windll.LoadLibrary('nicaiu.dll')
 
 DAQmx_Val_Cfg_Default             = ctypes.c_int32(-1)
 DAQmx_Val_DoNotInvertPolarity     = ctypes.c_int32(0)
