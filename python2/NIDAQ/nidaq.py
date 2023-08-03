@@ -271,7 +271,7 @@ class MultiBoard( CounterBoard ):
 									  start,
 									  ctypes.c_double(self._RWTimeout),
 									  dll.DAQmx_Val_GroupByChannel,
-									  data.ctypes.data_as(c_float64_p),
+									  data,
 									  ctypes.byref(self._AONwritten), None) )
 		return self._AONwritten.value
 	
