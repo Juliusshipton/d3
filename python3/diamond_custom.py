@@ -15,10 +15,14 @@ if __name__ == '__main__':
     # photon_time_trace.edit_traits()
 
     # start confocal including auto_focus tool
-    from measurements.confocal import Confocal
-    confocal = Confocal()
-    confocal.edit_traits()
+    # from measurements.confocal import Confocal
+    # confocal = Confocal()
+    # confocal.edit_traits()
 
+    # Manual Test
+    from hardware.api import Scanner
+
+    scanner = Scanner()
 
 
 
