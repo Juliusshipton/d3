@@ -270,7 +270,7 @@ class MultiBoard( CounterBoard ):
 									  ctypes.c_int32(self._AOLength),
 									  start,
 									  ctypes.c_double(self._RWTimeout),
-									  DAQmx_Val_GroupByChannel,
+									  dll.DAQmx_Val_GroupByChannel,
 									  data.ctypes.data_as(c_float64_p),
 									  ctypes.byref(self._AONwritten), None) )
 		return self._AONwritten.value
@@ -295,7 +295,7 @@ class AOBoard():
 									 ctypes.c_long(1),
 									 1,
 									 ctypes.c_double(1.0),
-									 DAQmx_Val_GroupByChannel,
+									 dll.DAQmx_Val_GroupByChannel,
 									 data.ctypes.data_as(c_float64_p),
 									 ctypes.byref(self._Nwritten),
 									 None) )
@@ -766,7 +766,7 @@ class AnalogOutSyncCount():
 									 ctypes.c_int32(1),
 									 True,
 									 ctypes.c_double(1.0),
-									 DAQmx_Val_GroupByChannel,
+									 dll.DAQmx_Val_GroupByChannel,
 									 data.ctypes.data_as(c_float64_p),
 									 ctypes.byref(n_written),
 									 None
@@ -790,7 +790,7 @@ class AnalogOutSyncCount():
 									 ctypes.c_int32(n),
 									 False,
 									 ctypes.c_double(1.0),
-									 DAQmx_Val_GroupByChannel,
+									 dll.DAQmx_Val_GroupByChannel,
 									 data.ctypes.data_as(c_float64_p),
 									 ctypes.byref(n_written),
 									 None
@@ -868,7 +868,7 @@ class AnalogOutSyncAI():
 									 ctypes.c_int32(1),
 									 True,
 									 ctypes.c_double(1.0),
-									 DAQmx_Val_GroupByChannel,
+									 dll.DAQmx_Val_GroupByChannel,
 									 data.ctypes.data_as(c_float64_p),
 									 ctypes.byref(n_written),
 									 None
@@ -889,7 +889,7 @@ class AnalogOutSyncAI():
 										 ctypes.c_int32(1),
 										 True,
 										 ctypes.c_double(0.1),
-										 DAQmx_Val_GroupByChannel,
+										 dll.DAQmx_Val_GroupByChannel,
 										 data.ctypes.data_as(c_float64_p),
 										 ctypes.byref(n_written),
 										 None
@@ -902,7 +902,7 @@ class AnalogOutSyncAI():
 			CHK( dll.DAQmxReadAnalogF64(self.ai_task,
 									   ctypes.c_int32(1),
 									   ctypes.c_double(0.1),
-									   DAQmx_Val_GroupByChannel,
+									   dll.DAQmx_Val_GroupByChannel,
 									   ai_data.ctypes.data_as(c_float64_p),
 									   ctypes.c_uint32(1),
 									   ctypes.byref(n_read),
@@ -934,7 +934,7 @@ class AOTask(object):
 										 ctypes.c_long(self.N),
 										 0,
 										 ctypes.c_double(self.write_timeout),
-										 DAQmx_Val_GroupByChannel,
+										 dll.DAQmx_Val_GroupByChannel,
 										 data.ctypes.data_as(c_float64_p),
 										 ctypes.byref(self.Nwritten),
 										 None) )
@@ -943,7 +943,7 @@ class AOTask(object):
 										 ctypes.c_long(1),
 										 1,
 										 ctypes.c_double(self.write_timeout),
-										 DAQmx_Val_GroupByChannel,
+										 dll.DAQmx_Val_GroupByChannel,
 										 data.ctypes.data_as(c_float64_p),
 										 ctypes.byref(self.Nwritten),
 										 None) )
