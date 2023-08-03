@@ -14,32 +14,38 @@ if __name__ == '__main__':
     # photon_time_trace = PhotonTimeTrace()
     # photon_time_trace.edit_traits()
 
-    # # start confocal including auto_focus tool
-    # from measurements.confocal import Confocal
-    # confocal = Confocal()
-    # confocal.edit_traits()
+    # start confocal including auto_focus tool
+    from measurements.confocal import Confocal
+    confocal = Confocal()
+    confocal.edit_traits()
 
 
-    # NIDAQ Test
-    import nidaqmx
-    # system = nidaqmx.system.System.local()
-    # print(system.driver_version)
-    # devices = system.devices
-    # for device in devices:
-    #     print(device.name)
+
+
+
+
+
+
+    # # NIDAQ Test
+    # import nidaqmx
+    # # system = nidaqmx.system.System.local()
+    # # print(system.driver_version)
+    # # devices = system.devices
+    # # for device in devices:
+    # #     print(device.name)
     
 
-    from hardware.nidaq import Scanner
+    # from hardware.nidaq import Scanner
 	
-	# PYTHON3 EDIT Uncomment when NIDAC plugged in
-    test =  Scanner( CounterIn='/Dev1/Ctr1',
-					CounterOut='/Dev1/Ctr0',
-					TickSource='/Dev1/PFI3',
-					AOChannels='/Dev1/ao3',
-					x_range=(0.0,200.0),
-					y_range=(0.0,200.0),
-					z_range=(0,100.0),
-					v_range=(-1.00,1.00))
+	# # PYTHON3 EDIT Uncomment when NIDAC plugged in
+    # test =  Scanner( CounterIn='/Dev1/Ctr1',
+	# 				CounterOut='/Dev1/Ctr0',
+	# 				TickSource='/Dev1/PFI3',
+	# 				AOChannels='/Dev1/ao3',
+	# 				x_range=(0.0,200.0),
+	# 				y_range=(0.0,200.0),
+	# 				z_range=(0,100.0),
+	# 				v_range=(-1.00,1.00))
 
 
 

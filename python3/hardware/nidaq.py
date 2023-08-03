@@ -21,8 +21,6 @@ import ctypes
 import numpy
 import time
 
-import nidaqmx
-
 import PyDAQmx as dll
 
 # dll = ctypes.windll.LoadLibrary('nicaiu.dll')
@@ -68,11 +66,10 @@ def CHK(err):
 		dll.DAQmxGetErrorString(err,ctypes.byref(buf),buf_size)
 		raise RuntimeError('nidaq call failed with error %d: %s'%(err,repr(buf.value)))
 
-
+# route signal
 def Connect(source, destination):
 	"""Connect terminal 'source' to terminal 'destination'."""
 	CHK( dll.DAQmxConnectTerms(source, destination, DAQmx_Val_DoNotInvertPolarity )  )
-
 
 def Disconnect(source, destination):
 	"""Connect terminal 'source' to terminal 'destination'."""
@@ -99,8 +96,8 @@ class CounterBoard:
 		self._TickSource = TickSource #the signal: ticks coming from the APDs
 
 		# nidaq Tasks
-		self.COTask = ctypes.c_ulong()
-		self.CITask = ctypes.c_ulong()
+		self.COTask = dll.TaskHandle()
+		self.CITask = dll.TaskHandle()
 		CHK(  dll.DAQmxCreateTask('', ctypes.byref(self.COTask))  )
 		CHK(  dll.DAQmxCreateTask('', ctypes.byref(self.CITask))  )
 
@@ -222,6 +219,10 @@ class CounterBoard:
 		self.StopCI()
 		self.StopCO()
 
+#    def __del__(self):
+#        CHK( dll.DAQmxClearTask(self.CITask) )
+#        CHK( dll.DAQmxClearTask(self.COTask) )
+
 
 class MultiBoard( CounterBoard ):
 	"""nidaq Multifuntion board."""
@@ -229,81 +230,88 @@ class MultiBoard( CounterBoard ):
 	_DefaultAOLength = 1000
 
 	def __init__(self, CounterIn, CounterOut, TickSource, AOChannels, v_range=(0.,10.)):
-		# CounterBoard.__init__(self, CounterIn, CounterOut, TickSource)
+		CounterBoard.__init__(self, CounterIn, CounterOut, TickSource)
 		self._AODevice = AOChannels
-		
-		self.AOTask = nidaqmx.Task()
-		
-		CHK ( self.AOTask.ao_channels.add_ao_voltage_chan(
-			AOChannels,		      
-			'',
-			v_range[0],
-			v_range[1],
-			nidaqmx.constants.VoltageUnits.VOLTS ) )
-		# CHK(  dll.DAQmxCreateTask('', ctypes.byref(self.AOTask))  )
-		# CHK(  dll.DAQmxCreateAOVoltageChan( self.AOTask,
-		# 									self._AODevice, '',
-		# 									ctypes.c_double(v_range[0]),
-		# 									ctypes.c_double(v_range[1]),
-		# 									DAQmx_Val_Volts,'')    )
+		self.AOTask = dll.TaskHandle()
+		CHK(  dll.DAQmxCreateTask('', ctypes.byref(self.AOTask))  )
+		CHK(  dll.DAQmxCreateAOVoltageChan( self.AOTask,
+											self._AODevice, '',
+											ctypes.c_double(v_range[0]),
+											ctypes.c_double(v_range[1]),
+											DAQmx_Val_Volts,'')    )
 		self._AONwritten = ctypes.c_int32()
 
 		self.setAOLength(self._DefaultAOLength)
 
 	def setAOLength(self, N):
 		if N == 1:
-			CHK ( self.AOTask.timing.cfg_samp_clk_timing(rate=1, sample_mode=nidaqmx.constants.SampleTimingType.FINITE, samps_per_chan=1) )
-			self.AOTask.timing.samp_timing_type = nidaqmx.constants.SampleTimingType.ON_DEMAND
-			# CHK( dll.DAQmxSetSampTimingType( self.AOTask, DAQmx_Val_OnDemand)  )
+			CHK( dll.DAQmxSetSampTimingType( self.AOTask, DAQmx_Val_OnDemand)  )
 		else:
-			#CHK ( self.AOTask.timing.cfg_samp_clk_timing(rate=1, sample_mode=nidaqmx.constants.AcquisitionType.CONTINUOUS, active_edge=nidaqmx.constants.Edge.RISING ) )
-			# CHK( dll.DAQmxSetSampTimingType( self.AOTask, DAQmx_Val_SampClk)  )
+			CHK( dll.DAQmxSetSampTimingType( self.AOTask, DAQmx_Val_SampClk)  )
 			if N < numpy.inf:
-
-				CHK ( self.AOTask.timing.cfg_samp_clk_timing(
-					rate=ctypes.c_double(self._f), 
-					source = self._PulseTrain,
-					sample_mode=nidaqmx.constants.AcquisitionType.FINITE_SAMPLES, 
-					active_edge=nidaqmx.constants.Edge.FALLING,
-					samps_per_chan= ctypes.c_ulonglong(N)) )
-				
-				# CHK( dll.DAQmxCfgSampClkTiming( self.AOTask,
-				# 								self._PulseTrain,
-				# 								ctypes.c_double(self._f),
-				# 								DAQmx_Val_Falling, 
-				# 								DAQmx_Val_FiniteSamps,
-				# 								ctypes.c_ulonglong(N)) )
+				CHK( dll.DAQmxCfgSampClkTiming( self.AOTask,
+												self._PulseTrain,
+												ctypes.c_double(self._f),
+												DAQmx_Val_Falling, DAQmx_Val_FiniteSamps,
+												ctypes.c_ulonglong(N)) )
 		self._AOLength = N
 
 	def AOLength(self):
 		return self._AOLength
 
 	def StartAO(self):
-		CHK( self.AOTask.start() )
-		# CHK( dll.DAQmxStartTask(self.AOTask) )
+		CHK( dll.DAQmxStartTask(self.AOTask) )
 
 	def StopAO(self):
-		CHK( self.AOTask.stop() )
-		# CHK( dll.DAQmxStopTask(self.AOTask) )
+		CHK( dll.DAQmxStopTask(self.AOTask) )
 
 	def WriteAO(self, data, start=False):
-
-		written_value = self.AOTask.write(
-			data,
-			auto_start = start,
-			timeout = self._RWTimeout,
-		)
-
-		# CHK( dll.DAQmxWriteAnalogF64( self.AOTask,
-		# 							  ctypes.c_int32(self._AOLength),
-		# 							  start,
-		# 							  ctypes.c_double(self._RWTimeout),
-		# 							  DAQmx_Val_GroupByChannel,
-		# 							  data.ctypes.data_as(c_float64_p),
-		# 							  ctypes.byref(self._AONwritten), None) )
-		# return self._AONwritten.value
-		return written_value
+		CHK( dll.DAQmxWriteAnalogF64( self.AOTask,
+									  ctypes.c_int32(self._AOLength),
+									  start,
+									  ctypes.c_double(self._RWTimeout),
+									  DAQmx_Val_GroupByChannel,
+									  data.ctypes.data_as(c_float64_p),
+									  ctypes.byref(self._AONwritten), None) )
+		return self._AONwritten.value
 	
+class AOBoard():
+	"""nidaq Multifuntion board."""    
+	
+	def __init__(self, AOChannels):
+		self._AODevice = AOChannels
+		self.Task = dll.TaskHandle()
+		CHK(  dll.DAQmxCreateTask('', ctypes.byref(self.Task))  )
+		CHK(  dll.DAQmxCreateAOVoltageChan( self.Task,
+											self._AODevice, '',
+											ctypes.c_double(0.),
+											ctypes.c_double(10.),
+											DAQmx_Val_Volts,'')    )
+		CHK( dll.DAQmxSetSampTimingType( self.Task, DAQmx_Val_OnDemand)  )
+		self._Nwritten = ctypes.c_int32()
+
+	def Write(self, data):
+		CHK( dll.DAQmxWriteAnalogF64(self.Task,
+									 ctypes.c_long(1),
+									 1,
+									 ctypes.c_double(1.0),
+									 DAQmx_Val_GroupByChannel,
+									 data.ctypes.data_as(c_float64_p),
+									 ctypes.byref(self._Nwritten),
+									 None) )
+
+	def Start(self):
+		CHK( dll.DAQmxStartTask(self.Task)  )
+
+	def Wait(self, timeout):
+		CHK( dll.DAQmxWaitUntilTaskDone(self.Task, ctypes.c_double(timeout)) )
+
+	def Stop(self):
+		CHK( dll.DAQmxStopTask(self.Task)  )
+
+	def __del__(self):
+		CHK( dll.DAQmxClearTask(self.Task)  )
+
 
 class Scanner( MultiBoard ):
 
@@ -599,7 +607,443 @@ class PIScanner( MultiBoard ):
 			vx = vy
 			vy = vt            
 		return numpy.vstack( (vx,vy,vz) )
+		
+class SquareWave(object):
+	"""Provides output of a square wave of finite length."""
+
+	def __init__(self, square_wave_device, length=100, seconds_per_point=1e-3, duty_cycle=0.5):
+		self._square_wave_device = square_wave_device
+		self._length = length
+		self._seconds_per_point = seconds_per_point
+		
+		self._duty_cycle = duty_cycle
+		self._co_task = ctypes.c_ulong()
+		CHK(  dll.DAQmxCreateTask('', ctypes.byref(self._co_task))  )
+		CHK(  dll.DAQmxCreateCOPulseChanFreq( self._co_task,
+											  self._square_wave_device, '',
+											  DAQmx_Val_Hz, DAQmx_Val_Low, ctypes.c_double(0),
+											  ctypes.c_double(1./seconds_per_point),
+											  ctypes.c_double(duty_cycle) )  )
+		CHK(  dll.DAQmxCfgImplicitTiming( self._co_task, DAQmx_Val_FiniteSamps, ctypes.c_ulonglong(length))  )
+
+	def setTiming(self, seconds_per_point, duty_cycle=0.5):
+		CHK( dll.DAQmxSetCOPulseFreq( self._co_task, self._square_wave_device, ctypes.c_double(1./seconds_per_point)  )  )
+		CHK( dll.DAQmxSetCOPulseDutyCyc( self._co_task, self._square_wave_device, ctypes.c_double(duty_cycle)  )   )
+		self._seconds_per_point = seconds_per_point
+		self._duty_cycle = duty_cycle
+
+	def getTiming(self):
+		return self._seconds_per_point, self._duty_cycle
+
+	def setLength(self, length):
+		CHK(  dll.DAQmxCfgImplicitTiming( self._co_task, DAQmx_Val_FiniteSamps, ctypes.c_ulonglong(length))  )
+		self._length = length
 	
+	def getLength(self):
+		return self._length
+
+	def output(self):
+		try: # if nidaq behaves normal, this should work
+			CHK( dll.DAQmxStartTask(self._co_task) )
+		except: # else, try to re-create the task and try again
+			self.__init__(self._square_wave_device, self._length, self._seconds_per_point, self._duty_cycle)
+			CHK( dll.DAQmxStartTask(self._co_task) )
+		CHK( dll.DAQmxWaitUntilTaskDone(self._co_task, ctypes.c_double(4*self._length*self._seconds_per_point)) )
+		CHK( dll.DAQmxStopTask(self._co_task) )
+
+	def __del__(self):
+		CHK( dll.DAQmxClearTask(self._co_task)  )
+
+
+
+class AnalogOutSyncCount():
+
+	"""
+	Analog output waveform or single point.
+	Count synchronous with waveform.
+	"""
+		
+	def __init__(self, ao_chan, co_dev, ci_dev, ci_port, ao_range=(-10,10), duty_cycle=0.96):
+		ao_task = ctypes.c_ulong() # analog out
+		co_task = ctypes.c_ulong() # finite pulse train
+		ci_task = ctypes.c_ulong() # count photons
+		CHK( dll.DAQmxCreateTask('', ctypes.byref(ao_task)) )
+		CHK( dll.DAQmxCreateTask('', ctypes.byref(co_task)) )
+		CHK( dll.DAQmxCreateTask('', ctypes.byref(ci_task)) )
+		# ni task for analog out
+		CHK( dll.DAQmxCreateAOVoltageChan(ao_task,
+										  ao_chan,
+										  '',
+										  ctypes.c_double(ao_range[0]),
+										  ctypes.c_double(ao_range[1]),
+										  DAQmx_Val_Volts,
+										  ''
+										  ))
+		CHK( dll.DAQmxCreateCOPulseChanFreq(co_task,
+											co_dev,
+											'',
+											DAQmx_Val_Hz,
+											DAQmx_Val_Low,
+											ctypes.c_double(0),     # initial delay
+											ctypes.c_double(1000),  # frequency
+											ctypes.c_double(duty_cycle)
+											))
+		CHK( dll.DAQmxCreateCIPulseWidthChan(ci_task,
+											 ci_dev,
+											 '',
+											 ctypes.c_double(0),        # expected min
+											 ctypes.c_double(10000.),   # expected max
+											 DAQmx_Val_Ticks,
+											 DAQmx_Val_Rising,
+											 ''
+											 ))
+		"""
+		CHK( dll.DAQmxCreateCICountEdgesChan(ci_task,
+											 ci_dev,
+											 '',
+											 DAQmx_Val_Rising,
+											 0,                 # initial count
+											 DAQmx_Val_CountUp
+											 ))
+		"""
+
+		CHK( dll.DAQmxSetCIPulseWidthTerm(ci_task, ci_dev, co_dev+'InternalOutput') )
+		CHK( dll.DAQmxSetCICtrTimebaseSrc(ci_task, ci_dev, ci_port) )
+
+		# read samples from beginning of acquisition, do not overwrite
+		CHK( dll.DAQmxSetReadRelativeTo(ci_task, DAQmx_Val_CurrReadPos) )
+		CHK( dll.DAQmxSetReadOffset(ci_task, 0) )
+		CHK( dll.DAQmxSetReadOverWrite(ci_task, DAQmx_Val_DoNotOverwriteUnreadSamps) )
+
+		self.ao_task = ao_task
+		self.co_task = co_task
+		self.ci_task = ci_task
+		self.co_dev = co_dev
+		self.duty_cycle = duty_cycle
+		self.n_samples=None
+		self.seconds_per_point=None
+
+	def configure(self, n_samples, seconds_per_point):
+		"""
+		Configures the sampling length and rate.
+		
+			n==0:    single point
+			0<n<Inf: single waveform
+		"""
+		if n_samples == 0:
+			CHK( dll.DAQmxSetSampTimingType(self.ao_task, DAQmx_Val_OnDemand) )
+		elif n_samples < numpy.inf:
+			f = 1./seconds_per_point
+			CHK( dll.DAQmxSetSampTimingType(self.ao_task, DAQmx_Val_SampClk) )
+			CHK( dll.DAQmxCfgSampClkTiming(self.ao_task,
+										   self.co_dev+'InternalOutput',
+										   ctypes.c_double(f),
+										   DAQmx_Val_Falling,
+										   DAQmx_Val_FiniteSamps,
+										   ctypes.c_ulonglong(n_samples)) )
+			CHK( dll.DAQmxSetCOPulseFreq(self.co_task,
+										 self.co_dev,
+										 ctypes.c_double(f)
+										 ))
+			CHK( dll.DAQmxCfgImplicitTiming(self.co_task,
+											DAQmx_Val_ContSamps,
+											ctypes.c_ulonglong(n_samples+1)
+											))
+			CHK( dll.DAQmxCfgImplicitTiming(self.ci_task,
+											DAQmx_Val_FiniteSamps,
+											ctypes.c_ulonglong(n_samples+1)
+											))
+			self.ci_data = numpy.empty((n_samples+1,), dtype=numpy.uint32)
+		
+	def point(self, voltage):
+		"""Set the analog out channel(s) to the given value(s)."""
+		data = numpy.array(voltage, dtype=float)
+		if self.n_samples != 0:
+			self.configure(0, None)
+			self.n_samples = 0
+		n_written = ctypes.c_long()
+		CHK( dll.DAQmxWriteAnalogF64(self.ao_task,
+									 ctypes.c_int32(1),
+									 True,
+									 ctypes.c_double(1.0),
+									 DAQmx_Val_GroupByChannel,
+									 data.ctypes.data_as(c_float64_p),
+									 ctypes.byref(n_written),
+									 None
+									 ))
+	
+	def line(self, voltage, seconds_per_point):
+		"""Output a waveform and perform synchronous counting."""
+		data = numpy.array(voltage, dtype=float)
+		n = len(data)
+		if n != self.n_samples or seconds_per_point != self.seconds_per_point:
+			self.configure(n, seconds_per_point)
+			self.n_samples = n
+			self.seconds_per_point = numpy.float(seconds_per_point)
+		
+		ao_task = self.ao_task
+		ci_task = self.ci_task
+		co_task = self.co_task
+		
+		n_written = ctypes.c_long()
+		CHK( dll.DAQmxWriteAnalogF64(ao_task,
+									 ctypes.c_int32(n),
+									 False,
+									 ctypes.c_double(1.0),
+									 DAQmx_Val_GroupByChannel,
+									 data.ctypes.data_as(c_float64_p),
+									 ctypes.byref(n_written),
+									 None
+									 ))
+		
+		ci_data = self.ci_data
+		n_read = ctypes.c_int32()
+		timeout = 4 * n * seconds_per_point
+
+		CHK( dll.DAQmxStartTask(ao_task) )
+		CHK( dll.DAQmxStartTask(ci_task) )
+		CHK( dll.DAQmxStartTask(co_task) )
+		
+		CHK( dll.DAQmxWaitUntilTaskDone(ci_task, ctypes.c_double(timeout)) )
+
+		CHK( dll.DAQmxReadCounterU32(ci_task,
+									 ctypes.c_int32(n+1),
+									 ctypes.c_double(1.0),
+									 ci_data.ctypes.data_as(c_uint32_p),
+									 ctypes.c_uint32(n+1),
+									 ctypes.byref(n_read),
+									 None
+									 ))
+
+		CHK( dll.DAQmxStopTask(ao_task) )
+		CHK( dll.DAQmxStopTask(ci_task) )
+		CHK( dll.DAQmxStopTask(co_task) )
+		
+		return ci_data[:-1] / ( self.seconds_per_point * self.duty_cycle ) # -ci_data[:-1]
+
+		
+class AnalogOutSyncAI():
+
+	"""
+	Analog output waveform or single point.
+	Analog input data synchronous with waveform.
+	"""
+		
+	def __init__(self, ao_chan, ai_dev, ao_range=(-10.0,10.0)):
+		ao_task = ctypes.c_ulong() # analog out
+		ai_task = ctypes.c_ulong() # get photo diode readings
+		CHK( dll.DAQmxCreateTask('', ctypes.byref(ao_task)) )
+		CHK( dll.DAQmxCreateTask('', ctypes.byref(ai_task)) )
+		# ni task for analog out
+		CHK( dll.DAQmxCreateAOVoltageChan(ao_task,
+										  ao_chan,
+										  '',
+										  ctypes.c_double(ao_range[0]),
+										  ctypes.c_double(ao_range[1]),
+										  DAQmx_Val_Volts,
+										  ''
+										  ))
+		CHK( dll.DAQmxCreateAIVoltageChan(ai_task,
+										  ai_dev,
+										  '',
+										  DAQmx_Val_Cfg_Default,
+										  ctypes.c_double(-10.0),        # expected min
+										  ctypes.c_double(10.0),   # expected max
+										  DAQmx_Val_Volts,
+										  ''
+										  ))
+		
+		
+		self.ao_task = ao_task
+		self.ai_task = ai_task
+		self.n_samples=None
+		self.seconds_per_point=None
+		
+   
+	def point(self, voltage):
+		"""Set the analog out channel(s) to the given value(s)."""
+		data = numpy.array(voltage, dtype=float)
+		n_written = ctypes.c_long()
+		CHK( dll.DAQmxWriteAnalogF64(self.ao_task,
+									 ctypes.c_int32(1),
+									 True,
+									 ctypes.c_double(1.0),
+									 DAQmx_Val_GroupByChannel,
+									 data.ctypes.data_as(c_float64_p),
+									 ctypes.byref(n_written),
+									 None
+									 ))
+	
+	def line(self, voltage, seconds_per_point):
+		"""Output a waveform and perform synchronous counting."""
+		data_w = numpy.array(voltage, dtype=float)
+		n = len(data_w)
+		self.n_samples = n
+		self.seconds_per_point = numpy.float(seconds_per_point)
+		self.ai_data = numpy.empty((self.n_samples+1,), dtype=float)
+		
+		for t, v1 in enumerate(data_w):
+			data = numpy.array(v1, dtype=float)
+			n_written = ctypes.c_long()
+			CHK( dll.DAQmxWriteAnalogF64(self.ao_task,
+										 ctypes.c_int32(1),
+										 True,
+										 ctypes.c_double(0.1),
+										 DAQmx_Val_GroupByChannel,
+										 data.ctypes.data_as(c_float64_p),
+										 ctypes.byref(n_written),
+										 None
+										 ))
+			time.sleep(seconds_per_point)
+			
+			ai_data = numpy.array(0.0, dtype=float)
+			n_read = ctypes.c_int32()
+			
+			CHK( dll.DAQmxReadAnalogF64(self.ai_task,
+									   ctypes.c_int32(1),
+									   ctypes.c_double(0.1),
+									   DAQmx_Val_GroupByChannel,
+									   ai_data.ctypes.data_as(c_float64_p),
+									   ctypes.c_uint32(1),
+									   ctypes.byref(n_read),
+									   None
+									   ))
+			self.ai_data[t]=ai_data
+			#time.sleep(1.0)
+			
+		return self.ai_data[:-1] 
+
+
+class AOTask(object):
+	"""Analog output N values with frequency f"""
+	def __init__(self, Channels, N=numpy.inf, f=None, range=(-10,10), write_timeout=1.0):
+		self.Channels = Channels
+		self.N = N
+		self.f = f
+		self.write_timeout = write_timeout
+		self.Nwritten = ctypes.c_long()
+		self.Task = ctypes.c_ulong()
+		CHK( dll.DAQmxCreateTask('', ctypes.byref(self.Task)) )
+		CHK( dll.DAQmxCreateAOVoltageChan(self.Task, self.Channels, '', ctypes.c_double(range[0]), ctypes.c_double(range[1]), DAQmx_Val_Volts,'')  )
+		if N < numpy.inf:
+			CHK( dll.DAQmxCfgSampClkTiming(self.Task, GateSource, ctypes.c_double(f), DAQmx_Val_Falling, DAQmx_Val_FiniteSamps, ctypes.c_ulonglong(N)) )
+
+	def Write(self, data):
+		if self.N < numpy.inf:
+			CHK( dll.DAQmxWriteAnalogF64(self.Task,
+										 ctypes.c_long(self.N),
+										 0,
+										 ctypes.c_double(self.write_timeout),
+										 DAQmx_Val_GroupByChannel,
+										 data.ctypes.data_as(c_float64_p),
+										 ctypes.byref(self.Nwritten),
+										 None) )
+		else:
+			CHK( dll.DAQmxWriteAnalogF64(self.Task,
+										 ctypes.c_long(1),
+										 1,
+										 ctypes.c_double(self.write_timeout),
+										 DAQmx_Val_GroupByChannel,
+										 data.ctypes.data_as(c_float64_p),
+										 ctypes.byref(self.Nwritten),
+										 None) )
+
+	def Start(self):
+		CHK( dll.DAQmxStartTask(self.Task)  )
+
+	def Wait(self, timeout):
+		CHK( dll.DAQmxWaitUntilTaskDone(self.Task, ctypes.c_double(timeout)) )
+
+	def Stop(self):
+		CHK( dll.DAQmxStopTask(self.Task)  )
+
+	def __del__(self):
+		CHK( dll.DAQmxClearTask(self.Task)  )
+
+class DOTask(object):
+
+	def __init__(self, DOChannels, write_timeout=1.0):
+		self.write_timeout = write_timeout
+		self.Nwritten = ctypes.c_long()
+		self.Task = ctypes.c_ulong()
+		CHK( dll.DAQmxCreateTask('', ctypes.byref(self.Task)) )
+		#CHK(  dll.DAQmxCreateDOChan( self.Task,
+		#                                    DOChannels, 
+		#                                    DAQmx_Val_ChanForAllLines)    )
+		CHK( dll.DAQmxCreateDOChan(self.Task, DOChannels, '',  DAQmx_Val_ChanPerLine) )
+
+	def Write(self, data):
+		#CHK( dll.DAQmxWriteDigitalScalarU32(self.Task, ctypes.c_long(1), ctypes.c_double(self.write_timeout), ctypes.c_uint32(value), None)  )
+		
+		CHK( dll.DAQmxWriteDigitalLines(self.Task,
+										ctypes.c_long(1),
+										1, 
+										ctypes.c_double(self.write_timeout),
+										1,
+										data.ctypes.data_as(c_uint32_p),
+										ctypes.byref(self.Nwritten),
+										None ) )
+		
+		
+		
+		#CHK( dll.DAQmxWriteDigitalU32(self.Task, ctypes.c_long(1), 1,  ctypes.c_double(self.write_timeout), DAQmx_Val_GroupByChannel, data.ctypes.data, ctypes.byref(self.Nwritten), None ) )
+
+	def Start(self):
+		CHK( dll.DAQmxStartTask(self.Task)  )
+
+	def Wait(self, timeout):
+		CHK( dll.DAQmxWaitUntilTaskDone(self.Task, ctypes.c_double(timeout)) )
+
+	def Stop(self):
+		CHK( dll.DAQmxStopTask(self.Task)  )
+
+	def __del__(self):
+		CHK( dll.DAQmxClearTask(self.Task)  )
+
+class AITask(object):
+	"""Analog input N values with frequency f"""
+	def __init__(self, Channels, N, f, read_timeout=1.0, range=(-10, 10)):
+		self.Channels = Channels
+		self.N = N
+		self.f = f
+		self.clock_source = 'OnboardClock'
+		self.read_timeout = read_timeout
+		self.range = range
+
+		self.timeout = ctypes.c_double(4.*N/f)
+		self.Nread = ctypes.c_long()
+		self.data    = numpy.zeros((3,N), dtype=numpy.double )
+		self.Task = ctypes.c_ulong()
+		CHK( dll.DAQmxCreateTask('', ctypes.byref(self.Task)) )
+		CHK( dll.DAQmxCreateAIVoltageChan(self.Task, self.Channels, '', DAQmx_Val_Cfg_Default, ctypes.c_double(self.range[0]), ctypes.c_double(self.range[1]), DAQmx_Val_Volts, ''))
+		CHK( dll.DAQmxCfgSampClkTiming(self.Task, self.clock_source, ctypes.c_double(f), DAQmx_Val_Rising, DAQmx_Val_FiniteSamps, ctypes.c_ulonglong(N)) )
+
+	def Read(self):
+		CHK( dll.DAQmxReadAnalogF64(self.Task,
+									ctypes.c_long(self.N),
+									ctypes.c_double(self.read_timeout),
+									DAQmx_Val_GroupByChannel,
+									self.data.ctypes.data_as(c_float64_p),
+									ctypes.c_ulong(3*self.N),
+									ctypes.byref(self.Nread),
+									None) )
+		return self.data
+
+	def Start(self):
+		CHK( dll.DAQmxStartTask(self.Task)  )
+
+	def Wait(self):
+		CHK( dll.DAQmxWaitUntilTaskDone(self.Task, self.timeout) )
+
+	def Stop(self):
+		CHK( dll.DAQmxStopTask(self.Task)  )
+
+	def __del__(self):
+		CHK( dll.DAQmxClearTask(self.Task)  )
+
+
+
+
 
 class PulseTrainCounter:
 	"""Outputs pulsed train and performs gated count."""
@@ -683,48 +1127,6 @@ class PulseTrainCounter:
 			self.clear()
 		except Exception as e:
 			print(str(e))
-
-
-class DOTask(object):
-
-    def __init__(self, DOChannels, write_timeout=1.0):
-        self.write_timeout = write_timeout
-        self.Nwritten = ctypes.c_long()
-        self.Task = ctypes.c_ulong()
-        CHK( dll.DAQmxCreateTask('', ctypes.byref(self.Task)) )
-        #CHK(  dll.DAQmxCreateDOChan( self.Task,
-        #                                    DOChannels, 
-        #                                    DAQmx_Val_ChanForAllLines)    )
-        CHK( dll.DAQmxCreateDOChan(self.Task, DOChannels, '',  DAQmx_Val_ChanPerLine) )
-
-    def Write(self, data):
-        #CHK( dll.DAQmxWriteDigitalScalarU32(self.Task, ctypes.c_long(1), ctypes.c_double(self.write_timeout), ctypes.c_uint32(value), None)  )
-        
-        CHK( dll.DAQmxWriteDigitalLines(self.Task,
-                                        ctypes.c_long(1),
-                                        1, 
-                                        ctypes.c_double(self.write_timeout),
-                                        1,
-                                        data.ctypes.data_as(c_uint32_p),
-                                        ctypes.byref(self.Nwritten),
-                                        None ) )
-        
-        
-        
-        #CHK( dll.DAQmxWriteDigitalU32(self.Task, ctypes.c_long(1), 1,  ctypes.c_double(self.write_timeout), DAQmx_Val_GroupByChannel, data.ctypes.data, ctypes.byref(self.Nwritten), None ) )
-
-    def Start(self):
-        CHK( dll.DAQmxStartTask(self.Task)  )
-
-    def Wait(self, timeout):
-        CHK( dll.DAQmxWaitUntilTaskDone(self.Task, ctypes.c_double(timeout)) )
-
-    def Stop(self):
-        CHK( dll.DAQmxStopTask(self.Task)  )
-
-    def __del__(self):
-        CHK( dll.DAQmxClearTask(self.Task)  )
-
 
 def test():
 	#stage = nidaqStage(1, 1, 0, '0:2')
