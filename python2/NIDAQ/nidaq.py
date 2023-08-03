@@ -267,12 +267,13 @@ class MultiBoard( CounterBoard ):
 
 	def WriteAO(self, data, start=False):
 		CHK( dll.DAQmxWriteAnalogF64( self.AOTask,
-									  ctypes.c_int32(self._AOLength),
+									  self._AOLength,
 									  start,
-									  ctypes.c_double(self._RWTimeout),
+									  self._RWTimeout,
 									  dll.DAQmx_Val_GroupByChannel,
 									  data,
-									  ctypes.byref(self._AONwritten), None) )
+									  dll.byref(self._AONwritten), 
+									  None) )
 		return self._AONwritten.value
 	
 class AOBoard():
