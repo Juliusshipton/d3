@@ -12,7 +12,7 @@ from traitsui.file_dialog import open_file, save_file
 from chaco.api import PlotGraphicsContext
 # PYTHON3 EDIT SimpleZoom outdated now BetterZoom
 # from chaco.tools.simple_zoom import SimpleZoom 
-from chaco.tools.better_zoom import BetterZoom 
+from chaco.tools.zoom_tool import ZoomTool 
 
 
 import logging
@@ -299,7 +299,7 @@ class GetSetSaveImageHandler( GetSetItemsHandler ):
                 filename=filename+'.png'
             info.object.save_image(filename)    
 
-class AspectZoomTool(BetterZoom):
+class AspectZoomTool(ZoomTool):
 
     box = Tuple()
 
