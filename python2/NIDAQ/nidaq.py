@@ -266,6 +266,11 @@ class MultiBoard( CounterBoard ):
 		CHK( dll.DAQmxStopTask(self.AOTask) )
 
 	def WriteAO(self, data, start=False):
+		
+		print(data)
+
+		print(self._AOLength)
+		
 		CHK( dll.DAQmxWriteAnalogF64( self.AOTask,
 									  self._AOLength,
 									  start,
