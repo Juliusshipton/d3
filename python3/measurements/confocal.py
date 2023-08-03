@@ -27,7 +27,7 @@ import logging
 
 from hardware.api import Scanner
 
-scanner = None
+scanner = Scanner()
 
 
 class Confocal( ManagedJob, GetSetItemsMixin ):
