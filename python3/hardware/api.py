@@ -26,6 +26,8 @@ from . import time_tagger_control
 TimeTagger= time_tagger_control.TimeTaggerControl()
 
 # NIDAQ Scanner Initialization
+from tools.utility import singleton
+
 @singleton
 def Scanner():
 	from .nidaq import Scanner
