@@ -210,14 +210,17 @@ class GetSetItemsMixin:
                 logging.getLogger().warning('Cannot import from Ascii-File')
             else: 
                 try:
+                    print('trying to load 1 ...')
                     self.set_items(cPickle.load(open(filename,'r'), encoding='iso-8859-1'))
                     logging.getLogger().debug('state of '+self.__str__()+' restored.')
                 except:
                     try:
+                        print('trying to load 2 ...')
                         self.set_items(cPickle.load(open(filename,'rb'), encoding='iso-8859-1'))
                         logging.getLogger().debug('state of '+self.__str__()+' restored.')
                     except:
                         try:
+                            print('trying to load 3 ...')
                             self.set_items(cPickle.load(open(filename,'rU'), encoding='iso-8859-1'))
                             logging.getLogger().debug('state of '+self.__str__()+' restored.')
                         except:
