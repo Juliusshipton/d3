@@ -6,6 +6,7 @@ import threading
 import logging
 
 from tools.utility import Singleton, StoppableThread, timestamp
+from functools import cmp_to_key
 
 from traits.api import HasTraits, Instance, Enum, Range, Button
 from traitsui.api import View, Item, HGroup
@@ -92,8 +93,17 @@ class JobManager( ): # ToDo: In principle this need not be a singleton. Then the
         self.running = None
         self.refresh_interval = 0.1 # seconds
     
-    def submit(self, job):
 
+    
+    def submit(self, job):
+        # USED TO FIX OUTDATED CMP USAGE
+        def compare_priority(x, y):
+            if x.priority < y.priority:
+                return -1
+            elif x.priority > y.priority:
+                return 1
+            else:
+                return 0
         """
         Submit a job.
         
@@ -121,7 +131,7 @@ class JobManager( ): # ToDo: In principle this need not be a singleton. Then the
             return
 
         queue.append(job)
-        queue.sort(cmp=lambda x,y: cmp(x.priority,y.priority), reverse=True) # ToDo: Job sorting not thoroughly tested
+        queue.sort(key=cmp_to_key(compare_priority), reverse=True) # ToDo: Job sorting not thoroughly tested
         job.state='wait'
                     
         logging.debug('Notifying process thread.')
@@ -184,6 +194,14 @@ class JobManager( ): # ToDo: In principle this need not be a singleton. Then the
         
         Use .start() and .stop() methods to start and stop processing of the queue.
         """
+        # USED TO FIX OUTDATED CMP USAGE
+        def compare_priority(x, y):
+            if x.priority < y.priority:
+                return -1
+            elif x.priority > y.priority:
+                return 1
+            else:
+                return 0
         
         while True:
             
@@ -221,7 +239,7 @@ class JobManager( ): # ToDo: In principle this need not be a singleton. Then the
                 if self.running.state != 'done':
                     logging.debug('Reinserting job '+str(self.running)+' in queue.')
                     self.queue.insert(0,self.running)
-                    self.queue.sort(cmp=lambda x,y: cmp(x.priority,y.priority), reverse=True) # ToDo: Job sorting not thoroughly tested
+                    self.queue.sort(key=cmp_to_key(compare_priority), reverse=True) # ToDo: Job sorting not thoroughly tested
                     self.running.state='wait'
                 self.running = self.queue.pop(0)
                 logging.debug('Found job '+str(self.running)+'. Starting.')
