@@ -32,7 +32,6 @@ from tools.utility import singleton
 def Scanner():
 	from .nidaq import Scanner
 	
-	# PYTHON3 EDIT Uncomment when NIDAC plugged in
 	return Scanner( CounterIn='/Dev1/Ctr1',
 					CounterOut='/Dev1/Ctr0',
 					TickSource='/Dev1/PFI3',
@@ -42,6 +41,18 @@ def Scanner():
 					z_range=(0,100.0),
 					v_range=(-1.00,10.00))
 
+@singleton
+def Microwave():
+    from . import microwave_sources
+    return microwave_sources.SMIQ(visa_address='GPIB0::25')
+
+
+
+
+
+
+
+############# OLD #############
 
 
 class Counter(  ):
