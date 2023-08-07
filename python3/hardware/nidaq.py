@@ -467,7 +467,7 @@ class Scanner( MultiBoard ):
 		else:
 			# vy = v0+(r[1]-y[0])/(y[1]-y[0])*2.5            
 			# vy = v0+(r[1]-y[0])/(y[1]-y[0])*dv
-			vy = v0+(y[1]-r[1])/(y[1]-y[0])*2.0       
+			vy = v0+(r[1]-y[0])/(y[1]-y[0])*2.0       
 
 		if self.invert_z:
 			# vz = v0+(z[1]-r[2])/(z[1]-z[0])*dv            
