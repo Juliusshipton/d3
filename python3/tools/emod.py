@@ -94,14 +94,14 @@ class JobManager( ): # ToDo: In principle this need not be a singleton. Then the
     """Provides a queue for starting and stopping jobs according to their priority."""
         
     def __init__(self):
-        if not self.__initialized:
+        if not hasattr(self, '_initialized'):
             self.thread = StoppableThread() # the thread the manager loop is running in
             self.lock = threading.Condition() # lock to control access to 'queue' and 'running'
             self.queue = []
             self.running = None
             self.refresh_interval = 0.1 # seconds
             # SINGLETON ENFORCING
-            self.__initialized = True
+            self._initialized = True
     
 
     
