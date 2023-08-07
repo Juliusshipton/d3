@@ -82,16 +82,26 @@ class Job( HasTraits ):
             logging.getLogger().debug('Turning off all instruments.')            
 
 class JobManager( ): # ToDo: In principle this need not be a singleton. Then there could be different job managers handling different sets of resources. However currently we need singleton since the JobManager is called explicitly on ManagedJob class.
-    __metaclass__ = Singleton
+    # __metaclass__ = Singleton
     
+    # SINGLETON ENFORCING
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super(JobManager, cls).__new__(cls, *args, **kwargs)
+        return cls._instance
     """Provides a queue for starting and stopping jobs according to their priority."""
         
     def __init__(self):
-        self.thread = StoppableThread() # the thread the manager loop is running in
-        self.lock = threading.Condition() # lock to control access to 'queue' and 'running'
-        self.queue = []
-        self.running = None
-        self.refresh_interval = 0.1 # seconds
+        if not self.__initialized:
+            self.thread = StoppableThread() # the thread the manager loop is running in
+            self.lock = threading.Condition() # lock to control access to 'queue' and 'running'
+            self.queue = []
+            self.running = None
+            self.refresh_interval = 0.1 # seconds
+            # SINGLETON ENFORCING
+            self.__initialized = True
     
 
     
