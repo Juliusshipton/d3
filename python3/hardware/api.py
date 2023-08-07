@@ -110,8 +110,6 @@ def Counter():
 CounterA=Counter
 
 
-MicrowaveA = Microwave
-
 @singleton
 def RFSource():
 	import rf_source
