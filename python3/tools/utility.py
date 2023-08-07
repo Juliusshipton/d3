@@ -250,14 +250,14 @@ class GetSetItemsHandler( Handler ):
     """Handles save and load actions."""
         
     def save(self,info):
-        save_file(title='Save')
+        filename = save_file(title='Save')
         if filename is '':
             return
         else:
             info.object.save(filename)
 
     def export(self, info):
-        save_file(title='Export to Ascii')
+        filename = save_file(title='Export to Ascii')
         if filename is '':
             return
         if filename.find('.txt')==-1 or filename.find('.asc')==-1:
@@ -267,7 +267,7 @@ class GetSetItemsHandler( Handler ):
             info.object.save(filename)
 
     def load(self, info):
-        open_file(title='Load')
+        filename = open_file(title='Load')
         if filename is '':
             return
         else:
@@ -291,7 +291,7 @@ class GetSetSaveImageHandler( GetSetItemsHandler ):
     """Provides handling of image save action."""
 
     def save_image(self, info):
-        save_file(title='Save Image')
+        filename = save_file(title='Save Image')
         if filename is '':
             return
         else:
