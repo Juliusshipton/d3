@@ -109,10 +109,6 @@ def Counter():
 
 CounterA=Counter
 
-@singleton
-def Microwave():
-	import microwave_sources
-	return microwave_sources.SMIQ(visa_address='GPIB0::25')
 
 MicrowaveA = Microwave
 
