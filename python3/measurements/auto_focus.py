@@ -208,7 +208,8 @@ class AutoFocus( ManagedJob, GetSetItemsMixin ):
         
         try:
             self.state='run'
-            ha.PulseGenerator().Light()
+            # TODO TURN LASER BACK ON
+            # ha.PulseGenerator().Light()
             
             if self.current_target is None:
                 self.focus()
