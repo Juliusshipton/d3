@@ -210,15 +210,15 @@ class GetSetItemsMixin:
                 logging.getLogger().warning('Cannot import from Ascii-File')
             else: 
                 try:
-                    self.set_items(cPickle.load(open(filename,'r')))
+                    self.set_items(cPickle.load(open(filename,'r'), encoding='iso-8859-1'))
                     logging.getLogger().debug('state of '+self.__str__()+' restored.')
                 except:
                     try:
-                        self.set_items(cPickle.load(open(filename,'rb')))
+                        self.set_items(cPickle.load(open(filename,'rb'), encoding='iso-8859-1'))
                         logging.getLogger().debug('state of '+self.__str__()+' restored.')
                     except:
                         try:
-                            self.set_items(cPickle.load(open(filename,'rU')))
+                            self.set_items(cPickle.load(open(filename,'rU'), encoding='iso-8859-1'))
                             logging.getLogger().debug('state of '+self.__str__()+' restored.')
                         except:
                             logging.getLogger().debug('failed to restore state of '+self.__str__()+'.')  
@@ -430,5 +430,5 @@ def singleton(old_func):
     return func
 
 
-if __name__ is '__main__':
+if __name__ == '__main__':
     pass
