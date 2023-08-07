@@ -203,6 +203,7 @@ class GetSetItemsMixin:
         return d            
     
     def load(self, filename=None):
+        print('In other load method ...')
         if os.access(filename, os.F_OK):
             logging.getLogger().debug('attempting to restore state of '+self.__str__()+' from '+filename+'...')
             if filename.find('.txt')!=-1 or filename.find('.asc')!=-1:
@@ -251,14 +252,14 @@ class GetSetItemsHandler( Handler ):
         
     def save(self,info):
         filename = save_file(title='Save')
-        if filename is '':
+        if filename == '':
             return
         else:
             info.object.save(filename)
 
     def export(self, info):
         filename = save_file(title='Export to Ascii')
-        if filename is '':
+        if filename == '':
             return
         if filename.find('.txt')==-1 or filename.find('.asc')==-1:
             filename=filename+'.asc'
@@ -268,9 +269,10 @@ class GetSetItemsHandler( Handler ):
 
     def load(self, info):
         filename = open_file(title='Load')
-        if filename is '':
+        if filename == '':
             return
         else:
+            print('Loading File ...')
             info.object.load(filename)
 
     """
@@ -292,7 +294,7 @@ class GetSetSaveImageHandler( GetSetItemsHandler ):
 
     def save_image(self, info):
         filename = save_file(title='Save Image')
-        if filename is '':
+        if filename == '':
             return
         else:
             if filename.find('.png')==-1:
