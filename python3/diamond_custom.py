@@ -9,10 +9,10 @@ import time
 if __name__ == '__main__':
     
 
-    # # Photon Time Trace Startup
-    # from measurements.photon_time_trace1 import PhotonTimeTrace
-    # photon_time_trace = PhotonTimeTrace()
-    # photon_time_trace.edit_traits()
+    # Photon Time Trace Startup
+    from measurements.photon_time_trace1 import PhotonTimeTrace
+    photon_time_trace = PhotonTimeTrace()
+    photon_time_trace.edit_traits()
 
     # start confocal including auto_focus tool
     from measurements.confocal import Confocal
