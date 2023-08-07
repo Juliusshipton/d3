@@ -140,7 +140,7 @@ class AutoFocus( ManagedJob, GetSetItemsMixin ):
         if self.fit_method_xy == 'Maximum':
             index = self.data_xy.argmax()
             xp = self.X[index%len(self.X)]
-            yp = self.Y[index/len(self.X)]
+            yp = self.Y[int(index/len(self.X))]
             self.XYFitParameters = [xp, yp]
             self.xfit = xp
             self.yfit = yp
