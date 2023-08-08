@@ -229,7 +229,8 @@ class ODMR(ManagedJob, GetSetItemsMixin):
         self.fit_parameters = p
         self.fit_frequencies = p[1::3]
         self.fit_line_width = p[2::3]
-        N = len(p) / 3
+        # PYTHON3 Update true division
+        N = int(len(p) / 3)
         contrast = np.empty(N)
         c = p[0]
         pp = p[1:].reshape((N, 3))
