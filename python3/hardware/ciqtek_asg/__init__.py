@@ -1,3 +1,3 @@
-from core import ASG8x00
+from .core import ASG8x00
 
-from compat import PulseGenerator
+from .compat import PulseGenerator
