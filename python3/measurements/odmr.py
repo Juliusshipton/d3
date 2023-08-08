@@ -331,7 +331,9 @@ class ODMR(ManagedJob, GetSetItemsMixin):
             p = self.fit_parameters
             f = p[1::3]
             w = p[2::3]
-            N = len(p) / 3
+
+            # PYTHON3 UPDATE true division
+            N = int(len(p) / 3)
             contrast = np.empty(N)
             c = p[0]
             pp = p[1:].reshape((N, 3))
