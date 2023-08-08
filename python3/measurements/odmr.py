@@ -16,7 +16,7 @@ from tools.emod import ManagedJob
 
 import hardware.api as ha
 
-from ..analysis import fitting
+from analysis import fitting
 
 from tools.utility import GetSetItemsHandler, GetSetItemsMixin
 
