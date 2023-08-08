@@ -51,7 +51,7 @@ def Microwave():
 # 	# return PulseGeneratorClass(serial='1634000FWV',channel_map={'green':0,'aom':0, 'mw_x':1, 'mw':1,'rf':2,'laser':3,'sequence':4, 'mw_2':5, 'test':6, 'blue':7, 'flip':8})
 # 	#return PulseGeneratorClass(serial='1729000I9M',channel_map={'green':0,'aom':0, 'mw_x':1, 'mw':1,'rf':2,'laser':3,'sequence':4, 'blue':7})
 # 	return PulseGenerator.__init__(serial='2021000TCD',channel_map={'green':0,'aom':0, 'mw_x':1, 'mw':1,'rf':2,'laser':3,'sequence':4, 'mw_2':5, 'test':6, 'blue':7, 'flip':8})
-import ciqtek_asg
+from . import ciqtek_asg
 asg_device = ciqtek_asg.ASG8x00()
 
 @singleton
