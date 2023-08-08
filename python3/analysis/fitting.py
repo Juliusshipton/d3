@@ -404,7 +404,9 @@ def SumOverFunctions( functions ):
 	return function_factory
 
 def NLorentzians(*p):
-	N = (len(p)-1)/3
+	
+	# PYTHON3 UPDATE true division
+	N = int((len(p)-1)/3)
 	def f(x):
 		y = p[0]*np.ones(x.shape)
 		i = 0
