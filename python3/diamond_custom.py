@@ -24,9 +24,9 @@ if __name__ == '__main__':
     # auto_focus.edit_traits()
 
     # Start ODMR
-    from measurements.odmrr import ODMRR
-    odmrr = ODMRR()
-    odmrr.edit_traits()
+    from measurements.odmr import ODMR
+    odmr = ODMR()
+    odmr.edit_traits()
 
 
         
