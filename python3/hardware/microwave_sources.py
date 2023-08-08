@@ -17,7 +17,7 @@ along with diamond. If not, see <http://www.gnu.org/licenses/>.
 Copyright (C) 2009-2011 Helmut Fedder <helmut.fedder@gmail.com>
 """
 
-import visa
+import pyvisa as visa
 import numpy
 import logging
 
@@ -36,14 +36,20 @@ class SMIQ():
                 del self.instr
             except Exception:
                 pass
-            self.instr = visa.instrument(self.visa_address)
+            # Python3 pyvisa replacement for 
+            # self.instr = visa.instrument(self.visa_address)
+            rm = visa.ResourceManager()
+            self.instr = rm.open_resource(self.visa_address)
             self.instr.write(string)
         
     def _ask(self, str):
         try:
             val = self.instr.ask(str)
         except:
-            self.instr = visa.instrument(self.visa_address)
+            # Python3 pyvisa replacement for 
+            # self.instr = visa.instrument(self.visa_address)
+            rm = visa.ResourceManager()
+            self.instr = rm.open_resource(self.visa_address)
             val = self.instr.ask(str)
         return val
 
@@ -128,14 +134,20 @@ class SMR20():
                 del self.instr
             except Exception:
                 pass
-            self.instr = visa.instrument(self.visa_address)
+            # Python3 pyvisa replacement for 
+            # self.instr = visa.instrument(self.visa_address)
+            rm = visa.ResourceManager()
+            self.instr = rm.open_resource(self.visa_address)
             self.instr.write(string)
         
     def _ask(self, str):
         try:
             val = self.instr.ask(str)
         except:
-            self.instr = visa.instrument(self.visa_address)
+            # Python3 pyvisa replacement for 
+            # self.instr = visa.instrument(self.visa_address)
+            rm = visa.ResourceManager()
+            self.instr = rm.open_resource(self.visa_address)
             val = self.instr.ask(str)
         return val
 

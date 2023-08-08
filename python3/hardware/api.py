@@ -72,21 +72,7 @@ class Counter(  ):
 	def clear(self):
 		pass
 
-# class Microwave(  ):
-# 	def setPower(self, power):
-# 		logging.getLogger().debug('Setting microwave power to '+str(power)+'.')
-# 	def setOutput(self, power, frequency):
-# 		logging.getLogger().debug('Setting microwave to p='+str(power)+' f='+str(frequency)+'.')
-# 	def initSweep(self, f, p):
-# 		logging.getLogger().debug('Setting microwave to sweep between frequencies %e .. %e with power %f.'%(f[0],f[-1],p[0]))
-# 	def resetListPos(self):
-# 		pass
 
-# MicrowaveA = Microwave
-# MicrowaveB = Microwave
-# MicrowaveC = Microwave
-# MicrowaveD = Microwave
-# MicrowaveE = Microwave
 
 class RFSource():
 	def setOutput(self, power, frequency):
@@ -94,11 +80,7 @@ class RFSource():
 
 from tools.utility import singleton
 
-ScnnerA=Scanner
 
-def DigitalOut():
-	import do
-	return do.DigitalOut('/Dev1/port0/line8' )
 
 @singleton
 def Counter():
