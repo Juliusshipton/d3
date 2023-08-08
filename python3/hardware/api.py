@@ -94,6 +94,14 @@ class ASG(ciqtek_asg.PulseGenerator):
     def Open(self):
         self.setContinuous(0xffff)
 
+# Counter Initialization Used In ODMR
+@singleton
+def Counter():
+	from .nidaq import PulseTrainCounter
+	return PulseTrainCounter( CounterIn='/Dev1/Ctr3',
+							  CounterOut='/Dev1/Ctr2',
+							  TickSource='/Dev1/PFI3' )
+
 
 
 ############# OLD #############
@@ -126,14 +134,6 @@ from tools.utility import singleton
 
 
 
-@singleton
-def Counter():
-	from nidaq import PulseTrainCounter
-	return PulseTrainCounter( CounterIn='/Dev1/Ctr3',
-							  CounterOut='/Dev1/Ctr2',
-							  TickSource='/Dev1/PFI3' )
-
-CounterA=Counter
 
 
 @singleton
