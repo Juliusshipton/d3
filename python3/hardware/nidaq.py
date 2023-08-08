@@ -1129,7 +1129,7 @@ class PulseTrainCounter:
 		CHK( dll.DAQmxReadCounterU32(self._CITask,
 									 ctypes.c_int32(self._SampleLength),
 									 ctypes.c_double(self._RWTimeout),
-									 self._CIData.ctypes.data_as(c_uint32_p),
+									 self._CIData,
 									 ctypes.c_uint32(self._SampleLength),
 									 ctypes.byref(self._CINread), None) )
 		CHK( dll.DAQmxStopTask(self._COTask) )
