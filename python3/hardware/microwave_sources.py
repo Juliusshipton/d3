@@ -152,7 +152,10 @@ class SMR20():
             # self.instr = visa.instrument(self.visa_address)
             rm = visa.ResourceManager()
             self.instr = rm.open_resource(self.visa_address)
-            val = self.instr.ask(str)
+            
+            # Ask not in python3 pyvisa we use query instead
+            # val = self.instr.ask(str)
+            val = self.instr.query(str)
         return val
 
     def getPower(self):
