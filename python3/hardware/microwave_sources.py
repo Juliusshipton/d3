@@ -204,7 +204,7 @@ class SMR20():
         self._write(':ABOR:LIST')
         self._write('*WAI')
 
-from nidaq import SquareWave
+from .nidaq import SquareWave
 
 class HybridMicrowaveSourceSMIQNIDAQ():
     """Provides a microwave source that can do frequency sweeps
