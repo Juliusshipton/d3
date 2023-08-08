@@ -463,8 +463,11 @@ def fit_multiple_lorentzians(x,y,number_of_lorentzians='auto',threshold=0.5):
 		# if there is more than one region, throw away small regions and
 		# keep only those regions that are larger than half of the largest region
 		# otherwise use all regions
-		N = len(edges)/2
+
+		# PYTHON3 UPDATE true division
+		N = int(len(edges)/2)
 		left_and_right_edges = edges.reshape((N,2))
+
 		#if len(edges)/2 > 1:
 		#	 widths = left_and_right_edges[:,1] - left_and_right_edges[:,0]
 		#	 left_and_right_edges = left_and_right_edges[ np.where(widths>0.5*widths.max())[0], : ] 
@@ -475,7 +478,9 @@ def fit_multiple_lorentzians(x,y,number_of_lorentzians='auto',threshold=0.5):
 			edges = np.where(np.logical_xor(mask, np.append(False,mask[:-1])))[0]
 		if len(edges)%2 != 0:
 			raise RuntimeError('uneven number of edges')
-		N = len(edges)/2
+		
+		# PYTHON3 UPDATE true division
+		N = int(len(edges)/2)
 		left_and_right_edges = edges.reshape((N,2))
 	p = [ 0 ]
 	# for every local maximum, estimate parameters of Lorentzian and append them to the list of parameters p
