@@ -258,7 +258,8 @@ class ODMR(ManagedJob, GetSetItemsMixin):
                 N = int(N)
             try:
                 p = fitting.fit_multiple_lorentzians(self.frequency, self.counts, N, threshold=self.threshold * 0.01)
-            except Exception:
+            except Exception as e:
+                print('EXCEPTION IN FIT', e)
                 logging.getLogger().debug('ODMR fit failed.', exc_info=True)
                 p = np.nan * np.empty(4)
         else:
