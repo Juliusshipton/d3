@@ -1082,8 +1082,8 @@ class PulseTrainCounter:
 		f = 1. / SecondsPerPoint
 
 		# nidaq Tasks
-		self._COTask = ctypes.c_ulong()
-		self._CITask = ctypes.c_ulong()
+		self._COTask = dll.TaskHandle()
+		self._CITask = dll.TaskHandle()
 
 		CHK(  dll.DAQmxCreateTask('', ctypes.byref(self._COTask))  )
 		CHK(  dll.DAQmxCreateTask('', ctypes.byref(self._CITask))  )
