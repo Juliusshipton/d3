@@ -107,22 +107,6 @@ def Counter():
 ############# OLD #############
 
 
-class Counter(  ):
-	def configure(self, n, SecondsPerPoint, DutyCycle=0.8):
-		x = np.arange(n)
-		a = 100.
-		c = 50.
-		x0 = n/2.
-		g = n/10.
-		y = np.int32( c - a / np.pi * (  g**2 / ( (x-x0)**2 + g**2 )  ) )
-		Counter._sweeps = 0
-		Counter._y = y
-	def run(self):
-		time.sleep(1)
-		Counter._sweeps+=1
-		return np.random.poisson(Counter._sweeps*Counter._y)
-	def clear(self):
-		pass
 
 
 
