@@ -19,7 +19,6 @@ See 'custom_api_example.py' for examples.
 import numpy as np
 import logging
 import time
-from .pulse_generator_api import PulseGenerator
 
 # TimeTagger Singleton Initialization
 from . import time_tagger_control
