@@ -79,14 +79,19 @@ while True:
 		# create counter 
 		counters[command_object["Id"]] = TimeTagger.Pulsed(time_tagger, *command_object["Params"])
 		
-		# indicate 
-		# print(counters[command_object["Id"]].getData())
-		
+		# create and return message
+		# Example 2D array
+		array_2d = counter.getData()
+
+		# Convert 2D array to Unicode string
+		array_2d_string = [[unicode(item) for item in row] for row in array_2d]
+
 		# create and return message
 		message = {
-			"CommandRan": "Pulsed",
-			"GetData": counters[command_object["Id"]].getData().tolist()
+			"CommandRan": "GetDataPulsed",
+			"Data": array_2d_string
 		}
+
 		conn.sendall(json.dumps(message).encode())
 
 		# If command is get data, get the correct counter to call get data from dictionary by id
