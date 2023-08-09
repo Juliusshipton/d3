@@ -82,7 +82,7 @@ class ODMR(ManagedJob, GetSetItemsMixin):
     # control data fitting
     perform_fit = Bool(False, label='perform fit')
     number_of_resonances = Trait('auto', String('auto', auto_set=False, enter_set=True), Int(10000., desc='Number of Lorentzians used in fit', label='N', auto_set=False, enter_set=True))
-    threshold = Range(low= -99, high=99., value= -50., desc='Threshold for detection of resonances [%]. The sign of the threshold specifies whether the resonances are negative or positive.', label='threshold [%]', auto_set=False, enter_set=True)
+    threshold = Range(low= -99, high=99., value= -50., desc='Threshold for detection of resonances [%]. The sign of the threshold specifies whether the resonances are negative or positive.', label='threshold [%]', mode='text', auto_set=False, enter_set=True)
     
     # fit result
     fit_parameters = Array(value=np.array((np.nan, np.nan, np.nan, np.nan)))
