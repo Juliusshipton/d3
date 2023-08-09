@@ -1,7 +1,7 @@
 import numpy as np
 
 from traits.api import SingletonHasTraits, Trait, Instance, Property, String, Range, Float, Int, Bool, Array, Enum, Button, on_trait_change, cached_property, Code, List, NO_COMPARE
-from traitsui.api import View, Item, HGroup, VGroup, VSplit, Tabbed, EnumEditor, TextEditor, Group
+from traitsui.api import View, Item, HGroup, VGroup, VSplit, Tabbed, EnumEditor, TextEditor, Group, spring
 from enable.api import Component, ComponentEditor
 from chaco.api import ArrayPlotData, Plot, Spectral, PlotLabel
 
@@ -396,11 +396,13 @@ class ODMR(ManagedJob, GetSetItemsMixin):
                                      Item('state', style='readonly'),
                                      Item('run_time', style='readonly', format_str='%.f'),
                                      Item('stop_time'),
+                                     spring
                                      ),
                               VGroup(HGroup(Item('power', width= -40, enabled_when='state != "run"'),
                                             Item('frequency_begin', width= -80, enabled_when='state != "run"'),
                                             Item('frequency_end', width= -80, enabled_when='state != "run"'),
                                             Item('frequency_delta', width= -80, enabled_when='state != "run"'),
+                                            spring
                                             ),
                                      HGroup(Item('pulsed', enabled_when='state != "run"'),
                                             Item('power_p', width= -40, enabled_when='state != "run"'),
@@ -408,11 +410,13 @@ class ODMR(ManagedJob, GetSetItemsMixin):
                                             Item('frequency_end_p', width= -80, enabled_when='state != "run"'),
                                             Item('frequency_delta_p', width= -80, enabled_when='state != "run"'),
                                             Item('t_pi', width= -50, enabled_when='state != "run"'),
+                                            spring
                                             ),
                                      HGroup(Item('seconds_per_point', width= -40, enabled_when='state != "run"'),
                                             Item('laser', width= -50, enabled_when='state != "run"'),
                                             Item('wait', width= -50, enabled_when='state != "run"'),
                                             Item('add_RF'),
+                                            spring
                                             ),
                                      # HGroup(                                                   
                                            # Item('rf1Frequency', width= -80, enabled_when='state != "run"'),
@@ -425,14 +429,17 @@ class ODMR(ManagedJob, GetSetItemsMixin):
                                             Item('number_of_resonances', width= -60),
                                             Item('threshold', width= -60),
                                             Item('n_lines', width= -60),
+                                            spring
                                             ),
                                      HGroup(Item('fit_contrast', style='readonly'),
                                             Item('fit_line_width', style='readonly'),
                                             Item('fit_frequencies', style='readonly'),
+                                            spring
                                             ),
                                      ),
                               VSplit(Item('matrix_plot', show_label=False, resizable=True),
                                      Item('line_plot', show_label=False, resizable=True),
+                                     spring
                                      ),
                               ),
                        menubar=MenuBar(Menu(Action(action='saveLinePlot', name='SaveLinePlot (.png)'),
