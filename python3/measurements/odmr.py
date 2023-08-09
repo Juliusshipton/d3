@@ -440,7 +440,7 @@ class ODMR(ManagedJob, GetSetItemsMixin):
                               VSplit(Item('matrix_plot', show_label=False, resizable=True),
                                      Item('line_plot', show_label=False, resizable=True),
                                      spring,
-                                     height='1.0'
+                                     height=1.0
                                      ),
                               ),
                        menubar=MenuBar(Menu(Action(action='saveLinePlot', name='SaveLinePlot (.png)'),
