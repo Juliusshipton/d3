@@ -57,7 +57,7 @@ while True:
 		conn.sendall(json.dumps(message).encode())
 
 	# If command is get data, get the correct counter to call get data from dictionary by id
-	if(command_object["Command"] == "GetData"):
+	if(command_object["Command"] == "GetDataCounter"):
 		
 		# get counter from dictionary by id 
 		counter = counters[command_object["Id"]]
@@ -67,11 +67,9 @@ while True:
 		
 		# create and return message
 		message = {
-			"CommandRan": "GetData",
+			"CommandRan": "GetDataCounter",
 			"Data": counter.getData().tolist()
 		}
-
-		print json.dumps(message)
 
 		conn.sendall(json.dumps(message).encode())
 
@@ -89,5 +87,25 @@ while True:
 			"CommandRan": "Pulsed",
 			"GetData": counters[command_object["Id"]].getData().tolist()
 		}
+		conn.sendall(json.dumps(message).encode())
+
+		# If command is get data, get the correct counter to call get data from dictionary by id
+	if(command_object["Command"] == "GetDataPulsed"):
+		
+		# get counter from dictionary by id 
+		counter = counters[command_object["Id"]]
+
+		# Example 2D array
+		array_2d = counter.getData()
+
+		# Convert 2D array to Unicode string
+		array_2d_string = [[unicode(item) for item in row] for row in array_2d]
+
+		# create and return message
+		message = {
+			"CommandRan": "GetDataPulsed",
+			"Data": array_2d_string
+		}
+
 		conn.sendall(json.dumps(message).encode())
 

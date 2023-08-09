@@ -40,7 +40,7 @@ class TimeTagger():
 				
 				command = {
 					"TimeTaggerSerial": TimeTagger.serial_number,
-					"Command": "GetData",
+					"Command": "GetDataCounter",
 					"Id": self.id,
 				}
 
@@ -87,7 +87,7 @@ class TimeTagger():
 				
 				command = {
 					"TimeTaggerSerial": TimeTagger.serial_number,
-					"Command": "GetData",
+					"Command": "GetDataPulsed",
 					"Id": self.id,
 				}
 
