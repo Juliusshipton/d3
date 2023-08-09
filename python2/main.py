@@ -70,6 +70,9 @@ while True:
 			"CommandRan": "GetData",
 			"Data": counter.getData().tolist()
 		}
+
+		print json.dumps(message)
+
 		conn.sendall(json.dumps(message).encode())
 
 	#  If command is Pulsed call TimeTagger.Pulsed() with the params, and set in dictionary by id key		
