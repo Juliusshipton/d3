@@ -15,8 +15,8 @@ class Rabi( Pulsed ):
     """Defines a Rabi measurement."""
 
     switch      = Enum( 'mw_x','mw_b','mw_c',   desc='switch to use for different microwave source',     label='switch' )
-    frequency   = Range(low=1,      high=20e9,  value=2.879837e9, desc='microwave frequency', label='frequency [Hz]', mode='text', auto_set=False, enter_set=True)
-    power       = Range(low=-100.,  high=25.,   value=-16,      desc='microwave power',     label='power [dBm]',    mode='text', auto_set=False, enter_set=True)
+    frequency   = Range(low=1,      high=20e9,  value=2867493000.0, desc='microwave frequency', label='frequency [Hz]', mode='text', auto_set=False, enter_set=True)
+    power       = Range(low=-100.,  high=25.,   value=-27,      desc='microwave power',     label='power [dBm]',    mode='text', auto_set=False, enter_set=True)
 
     tau_begin   = Range(low=0., high=1e8,       value=1.5,     desc='tau begin [ns]',  label='tau begin [ns]',   mode='text', auto_set=False, enter_set=True)
     tau_end     = Range(low=1., high=1e8,       value=4000.,     desc='tau end [ns]',    label='tau end [ns]',     mode='text', auto_set=False, enter_set=True)

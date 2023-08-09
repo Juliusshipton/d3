@@ -45,6 +45,8 @@ def Microwave():
     from . import microwave_sources
     return microwave_sources.SMIQ(visa_address='GPIB0::25')
 
+MicrowaveA = Microwave
+
 # Pulse Generator Inidialization
 # @singleton
 # def PulseGenerator():
