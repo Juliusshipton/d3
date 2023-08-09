@@ -86,14 +86,14 @@ while True:
 		print(array_2d)
 
 		# Convert 2D array to Unicode string
-		array_2d_string = [[unicode(int(item)) for item in row] for row in array_2d]
+		list_of_lists = array_2d.tolist()
 
 		print(array_2d_string)
 
 		# create and return message
 		message = {
 			"CommandRan": "GetDataPulsed",
-			"Data": array_2d_string
+			"Data": list_of_lists
 		}
 
 		conn.sendall(json.dumps(message).encode())
