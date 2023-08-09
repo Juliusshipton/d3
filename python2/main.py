@@ -81,7 +81,7 @@ while True:
 		
 		# create and return message
 		# Example 2D array
-		array_2d = counter.getData()
+		array_2d = counters[command_object["Id"]].getData()
 		
 		print(array_2d)
 
@@ -89,7 +89,7 @@ while True:
 		array_2d_string = [[unicode(int(item)) for item in row] for row in array_2d]
 
 		print(array_2d_string)
-		
+
 		# create and return message
 		message = {
 			"CommandRan": "GetDataPulsed",
