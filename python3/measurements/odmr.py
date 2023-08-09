@@ -286,7 +286,7 @@ class ODMR(ManagedJob, GetSetItemsMixin):
         
     def _create_line_plot(self):
         line_data = ArrayPlotData(frequency=np.array((0., 1.)), counts=np.array((0., 0.)), fit=np.array((0., 0.))) 
-        line_plot = Plot(line_data, padding=8, padding_left=64, padding_right=64, padding_bottom=32)
+        line_plot = Plot(line_data, padding=8, padding_left=64, padding_right=64, padding_bottom=64)
         line_plot.plot(('frequency', 'counts'), style='line', color='blue')
         line_plot.index_axis.title = 'Frequency [MHz]'
         line_plot.value_axis.title = 'Fluorescence counts'
