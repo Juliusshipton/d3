@@ -6,7 +6,7 @@ from traitsui.api import View, Item, Tabbed, HGroup, VGroup, VSplit, EnumEditor,
 import logging
 import time
 
-from hardware.api import PulseGenerator, TimeTagger, Microwave, MicrowaveD, MicrowaveE, RFSource
+from hardware.api import PulseGenerator, TimeTagger, Microwave, RFSource
 
 from tools.emod import ManagedJob
 
