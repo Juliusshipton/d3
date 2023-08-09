@@ -103,19 +103,17 @@ while True:
 		counter = counters[command_object["Id"]]
 
 		# Example 2D array
-		array_2d = counter.getData()
-
-		print(array_2d)
-
+		array_2d = counters[command_object["Id"]].getData()
+		
 		# Convert 2D array to Unicode string
-		array_2d_string = [[unicode(int(item)) for item in row] for row in array_2d]
+		list_of_lists = array_2d.tolist()
 
-		print(array_2d_string)
+		print(list_of_lists)
 
 		# create and return message
 		message = {
 			"CommandRan": "GetDataPulsed",
-			"Data": array_2d_string
+			"Data": list_of_lists
 		}
 
 		conn.sendall(json.dumps(message).encode())
