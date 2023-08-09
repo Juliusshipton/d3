@@ -404,7 +404,7 @@ def SumOverFunctions( functions ):
 	return function_factory
 
 def NLorentzians(*p):
-	
+
 	# PYTHON3 UPDATE true division
 	N = int((len(p)-1)/3)
 	def f(x):
@@ -432,8 +432,6 @@ def grow(mask):
 	return np.logical_or(np.logical_or(mask, np.append(mask[1:],False)), np.append(False,mask[:-1]))
 
 def fit_multiple_lorentzians(x,y,number_of_lorentzians='auto',threshold=0.5):
-
-	print('IN fit_multiple_lorentzians')
 
 	"""Attempts to fit a sum of multiple Lorentzians and returns the fit parameters (c, x0, g0, a0, x1, g1, a1,... )."""
 	# first re-scale the data to the range (0,1), such that the baseline is at 0.
