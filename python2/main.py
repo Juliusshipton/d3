@@ -72,3 +72,19 @@ while True:
 		}
 		conn.sendall(json.dumps(message).encode())
 
+	#  If command is Pulsed call TimeTagger.Pulsed() with the params, and set in dictionary by id key		
+	if(command_object["Command"] == "Pulsed"):
+		
+		# create counter 
+		counters[command_object["Id"]] = TimeTagger.Pulsed(time_tagger, *command_object["Params"])
+		
+		# indicate 
+		# print(counters[command_object["Id"]].getData())
+		
+		# create and return message
+		message = {
+			"CommandRan": "Pulsed",
+			"GetData": counters[command_object["Id"]].getData().tolist()
+		}
+		conn.sendall(json.dumps(message).encode())
+

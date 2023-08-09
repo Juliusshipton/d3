@@ -61,16 +61,50 @@ class TimeTagger():
 
 
 	# Only way pulsed is called in our code is with 6 integer parameters
-	def Pulsed(tt_socket, a: int, b: int, c: int, d: int, e: int, f: int):
+	def Pulsed(tt_socket, nBins: int, binWidth: int, nLaser: int, c1: int, c2: int, c3: int):
+
+		params = [nBins, binWidth, nLaser, c2, c2, c3]
+		unique_id = TimeTagger.generate_random_id(10)
+		command = {
+			"TimeTaggerSerial": TimeTagger.serial_number,
+			"Command": "Pulsed",
+			"Id": unique_id, 
+			"Params": params,
+		}
+	
 		print("Sending data...")
-
-		test = ' '.join(map(str, [a, b, c]))
-		tt_socket.sendall(test.encode())
-		
+		tt_socket.sendall(json.dumps(command).encode())
 		data = tt_socket.recv(1024).decode()
-		print('Received from server: ' + data)
-		# TODO: Return a reference class that contains a method .getData(), and populate with data
+		print('Received from server: ' + str(data))
 
+		# return an object that contains a method called getData()
+		class PulsedResult:
+			def __init__(self, socket, id):
+				self.socket = socket
+				self.id = id
+
+			def getData(self):
+				
+				command = {
+					"TimeTaggerSerial": TimeTagger.serial_number,
+					"Command": "GetData",
+					"Id": self.id,
+				}
+
+				#This block of sends the command and stores received data in data string
+				# print("Sending data...")
+				self.socket.sendall(json.dumps(command).encode())
+				data_received = self.socket.recv(1024).decode()
+				# print('Received from server: ' + str(data))
+
+				result_object = json.loads(data_received)
+
+				result_list = result_object["Data"]
+
+				return np.array(result_list)
+
+		
+		return PulsedResult(tt_socket, unique_id)
 
 	def generate_random_id(length):
 		import random
