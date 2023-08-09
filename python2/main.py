@@ -83,12 +83,10 @@ while True:
 		# Example 2D array
 		array_2d = counters[command_object["Id"]].getData()
 		
-		print(array_2d)
-
 		# Convert 2D array to Unicode string
 		list_of_lists = array_2d.tolist()
 
-		print(array_2d_string)
+		print(list_of_lists)
 
 		# create and return message
 		message = {
