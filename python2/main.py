@@ -82,10 +82,14 @@ while True:
 		# create and return message
 		# Example 2D array
 		array_2d = counter.getData()
+		
+		print(array_2d)
 
 		# Convert 2D array to Unicode string
-		array_2d_string = [[unicode(item) for item in row] for row in array_2d]
+		array_2d_string = [[unicode(int(item)) for item in row] for row in array_2d]
 
+		print(array_2d_string)
+		
 		# create and return message
 		message = {
 			"CommandRan": "GetDataPulsed",
@@ -103,8 +107,12 @@ while True:
 		# Example 2D array
 		array_2d = counter.getData()
 
+		print(array_2d)
+
 		# Convert 2D array to Unicode string
-		array_2d_string = [[unicode(item) for item in row] for row in array_2d]
+		array_2d_string = [[unicode(int(item)) for item in row] for row in array_2d]
+
+		print(array_2d_string)
 
 		# create and return message
 		message = {
