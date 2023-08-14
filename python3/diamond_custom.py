@@ -7,7 +7,7 @@ import time
 # start confocal including auto_focus tool and Toolbox
 if __name__ == '__main__':
     
-
+    print("Running Python3 ...")
     # # Photon Time Trace Startup
     # from measurements.photon_time_trace1 import PhotonTimeTrace
     # photon_time_trace = PhotonTimeTrace()
