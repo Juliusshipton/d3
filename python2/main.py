@@ -86,7 +86,7 @@ while True:
 		# Convert 2D array to Unicode string
 		list_of_lists = array_2d.tolist()
 
-		print(array_2d.shape())
+		print(array_2d.shape)
 		print(type(list_of_lists))
 
 		# create and return message
@@ -112,7 +112,7 @@ while True:
 		# Convert 2D array to Unicode string
 		list_of_lists = array_2d.tolist()
 
-		print(array_2d.shape())
+		print(array_2d.shape)
 		print(type(list_of_lists))
 
 		# create and return message
