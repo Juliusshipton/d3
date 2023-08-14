@@ -92,10 +92,10 @@ class TimeTagger():
 				}
 
 				#This block of sends the command and stores received data in data string
-				# print("Sending data...")
+				print("Sending data...")
 				self.socket.sendall(json.dumps(command).encode())
 				data_received = self.socket.recv(1024).decode()
-				# print('Received from server: ' + str(data))
+				print('Received from server: ' + str(data))
 
 				result_object = json.loads(data_received)
 
