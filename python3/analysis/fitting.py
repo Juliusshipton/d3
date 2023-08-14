@@ -37,7 +37,8 @@ def baseline(y,n=20):
 def find_edge(y,bins=20):
 	"""Returns edge of a step function"""
 	h,b=np.histogram(y,bins=bins)
-	i0 = bins/2
+	# PYTHON3 int division different
+	i0 = int(bins/2)
 	i  = h[i0:].argmax()+i0
 	threshold = 0.5*(b[0]+b[i])
 	return np.where(y>threshold)[0][0]
