@@ -86,8 +86,6 @@ while True:
 		# Convert 2D array to Unicode string
 		list_of_lists = array_2d.tolist()
 
-		print(array_2d.shape)
-		print(type(list_of_lists))
 
 		# create and return message
 		message = {
@@ -95,9 +93,7 @@ while True:
 			"Data": list_of_lists
 		}
 
-		print("Sending data from py2 ...")
 		conn.sendall(json.dumps(message).encode())
-		print("Sent ...")
 
 
 		# If command is get data, get the correct counter to call get data from dictionary by id
@@ -112,17 +108,12 @@ while True:
 		# Convert 2D array to Unicode string
 		list_of_lists = array_2d.tolist()
 
-		print(array_2d.shape)
-		print(type(list_of_lists))
-
 		# create and return message
 		message = {
 			"CommandRan": "GetDataPulsed",
 			"Data": list_of_lists
 		}
 
-		print("Sending getdata from py2 ...")
 		conn.sendall(json.dumps(message).encode())
-		print("Sent ...")
 
 
