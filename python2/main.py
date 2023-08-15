@@ -32,7 +32,7 @@ while True:
 	# 1 receive data and parse into json object for easy access
 	data_received = conn.recv(1024).decode()	
 	command_object = json.loads(data_received)
-	print("Command Received ", command_object["Command"])
+	print "Command Received " + command_object["Command"]
 
 	# 2 if time tagger is none initialize with new TimeTagger() using serial from data string
 	if(time_tagger is None):
