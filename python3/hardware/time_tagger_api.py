@@ -6,7 +6,6 @@ This will be the Api class for TimeTagger that will send commands and parameters
 '''
 import json
 import numpy as np
-import time
 
 class TimeTagger():
 
@@ -25,10 +24,8 @@ class TimeTagger():
 		}
 
 		#This block of sends the command and stores received data in data string
-		print("Sending data...")
 		tt_socket.sendall(json.dumps(command).encode())
 		data = tt_socket.recv(2000000000).decode()
-		print('Received from server: ' + str(data))
 
 		# return an object that contains a method called getData()
 		class CounterResult:
@@ -72,10 +69,8 @@ class TimeTagger():
 			"Params": params,
 		}
 	
-		print("Sending data...")
 		tt_socket.sendall(json.dumps(command).encode())
 		data = tt_socket.recv(2000000000).decode()
-		print('Received from server: ' + str(data))
 
 		# return an object that contains a method called getData()
 		class PulsedResult:
@@ -92,14 +87,8 @@ class TimeTagger():
 				}
 
 				#This block of sends the command and stores received data in data string
-				print("Sending data pulsed get data...")
-				start_time = time.time()
-
 				self.socket.sendall(json.dumps(command).encode())
 				data_received = self.socket.recv(2000000000).decode()
-
-				elapsed_time = time.time() - start_time
-				print("Received in ", elapsed_time, "seconds")
 
 				result_object = json.loads(data_received)
 
