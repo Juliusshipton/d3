@@ -74,7 +74,7 @@ class TimeTagger():
 	
 		print("Sending data...")
 		tt_socket.sendall(json.dumps(command).encode())
-		data = tt_socket.recv(1024).decode()
+		data = tt_socket.recv(2000000).decode()
 		print('Received from server: ' + str(data))
 
 		# return an object that contains a method called getData()
@@ -94,7 +94,7 @@ class TimeTagger():
 				#This block of sends the command and stores received data in data string
 				print("Sending data...")
 				self.socket.sendall(json.dumps(command).encode())
-				data_received = self.socket.recv(1024).decode()
+				data_received = self.socket.recv(2000000).decode()
 				print('Received from server: ' + str(data))
 
 				result_object = json.loads(data_received)
