@@ -34,8 +34,8 @@ class ObjectThread(object):
 		self.counter = counter
 		self.connection = connection
 	
-	def run():
-		print "Runn method called within thread object"
+	def run(self):
+		print "Running Object Thread ..."
 	
 while True: 
 
