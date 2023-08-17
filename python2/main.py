@@ -71,8 +71,9 @@ while True:
 
 		# create counter object and set
 		counter_obj = TimeTagger.Counter(time_tagger, *command_object["Params"])
-		counter_obj.run()
-		counters[command_object["Id"]] = ObjectThread(counter_obj, new_conn)
+		new_thread = ObjectThread(counter_obj, new_conn)
+		new_thread.run()
+		counters[command_object["Id"]] = new_thread
 
 		print "Counter Initialized on port", port, "..."
 
