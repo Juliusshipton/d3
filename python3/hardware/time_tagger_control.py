@@ -11,15 +11,15 @@ from tools.utility1 import StoppableThread
 import socket
 import sys
 
-print("Python 3 running ...")
+# print("Python 3 running ...")
 
-HOST = '127.0.0.1'
-PORT = 8888
+# HOST = '127.0.0.1'
+# PORT = 8888
 
-tt_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-tt_socket.connect((HOST, PORT))
+# tt_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# tt_socket.connect((HOST, PORT))
 
-print("Connected")
+# print("Connected")
 
 class TimeTaggerControl( HasTraits ):
     
@@ -133,10 +133,10 @@ class TimeTaggerControl( HasTraits ):
     #     return TimeTagger.Countrate(self.time_tagger, channel)
         
     def Counter(self, *args, **kwargs):
-        return TimeTagger.Counter(tt_socket, *args, **kwargs)
+        return TimeTagger.Counter(*args, **kwargs)
     
     def Pulsed(self, *args, **kwargs):
-        return TimeTagger.Pulsed(tt_socket, *args, **kwargs)    
+        return TimeTagger.Pulsed(*args, **kwargs)    
         
     traits_view = View( VGroup(Label('Channel'), Label('Trigger level [V]'), Label('count rate [1/s]'),
                              Label('0'), Item('trigger_level_0'), Item('count_rate_0', style='readonly', format_str='%.f', width=-80),

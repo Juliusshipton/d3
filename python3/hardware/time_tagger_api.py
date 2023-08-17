@@ -7,13 +7,25 @@ This will be the Api class for TimeTagger that will send commands and parameters
 import json
 import numpy as np
 import time
+import socket
+import sys
+
+print("Python 3 running ...")
+
+HOST = '127.0.0.1'
+PORT = 8888
+
+tt_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+tt_socket.connect((HOST, PORT))
+
+print("Connected")
 
 class TimeTagger():
 
 	serial_number = "1634000FWP"
 
 	# Only way counter is called in our code is with 3 integer parameters
-	def Counter(tt_socket, channel: int, pSecPerPoint: int, traceLength: int):
+	def Counter(channel: int, pSecPerPoint: int, traceLength: int):
 
 		params = [channel, int(pSecPerPoint), traceLength]
 		unique_id = TimeTagger.generate_random_id(10)
@@ -69,7 +81,7 @@ class TimeTagger():
 
 
 	# Only way pulsed is called in our code is with 6 integer parameters
-	def Pulsed(tt_socket, nBins: int, binWidth: int, nLaser: int, c1: int, c2: int, c3: int):
+	def Pulsed(nBins: int, binWidth: int, nLaser: int, c1: int, c2: int, c3: int):
 
 		params = [nBins, binWidth, nLaser, c2, c2, c3]
 		unique_id = TimeTagger.generate_random_id(10)
