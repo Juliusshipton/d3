@@ -30,9 +30,12 @@ counters = {}
 
 # Define a class to represent the object
 class ObjectThread(object):
-    def __init__(self, counter, connection):
-        self.counter = counter
-        self.connection = connection
+	def __init__(self, counter, connection):
+		self.counter = counter
+		self.connection = connection
+	
+	def run():
+		print "Runn method called within thread object"
 	
 while True: 
 
@@ -68,9 +71,10 @@ while True:
 
 		# create counter object and set
 		counter_obj = TimeTagger.Counter(time_tagger, *command_object["Params"])
+		counter_obj.run()
 		counters[command_object["Id"]] = ObjectThread(counter_obj, new_conn)
 
-		print "Counter Initialized on port ", port,  "..."
+		print "Counter Initialized on port", port, "..."
 
 		# indicate 
 		# print(counters[command_object["Id"]].getData())
