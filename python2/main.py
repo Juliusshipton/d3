@@ -32,7 +32,7 @@ while True:
 	# 1 receive data and parse into json object for easy access
 	data_received = conn.recv(1024).decode()	
 	command_object = json.loads(data_received)
-	print "Command Received " + command_object["Command"]
+	# print "Command Received " + command_object["Command"]
 
 	# 2 if time tagger is none initialize with new TimeTagger() using serial from data string
 	if(time_tagger is None):
@@ -55,7 +55,7 @@ while True:
 			"GetData": counters[command_object["Id"]].getData().tolist()
 		}
 		conn.sendall(json.dumps(message).encode())
-		print("Response Sent Counter ...")
+		print("Counter Initialized ...")
 
 
 	# If command is get data, get the correct counter to call get data from dictionary by id
@@ -74,7 +74,7 @@ while True:
 		}
 
 		conn.sendall(json.dumps(message).encode())
-		print("Response Sent getDataCounter ...")
+		# print("Response Sent getDataCounter ...")
 
 
 	#  If command is Pulsed call TimeTagger.Pulsed() with the params, and set in dictionary by id key		
@@ -98,10 +98,13 @@ while True:
 		}
 
 		conn.sendall(json.dumps(message).encode())
-		print("Response Sent Pulsed ...")
+		print("Pulsed Initialized ...")
+
 
 
 		# If command is get data, get the correct counter to call get data from dictionary by id
+	
+	
 	if(command_object["Command"] == "GetDataPulsed"):
 		
 		# get counter from dictionary by id 
@@ -120,6 +123,6 @@ while True:
 		}
 
 		conn.sendall(json.dumps(message).encode())
-		print("Response Sent getDataPulsed ...")
+		# print("Response Sent getDataPulsed ...")
 
 
