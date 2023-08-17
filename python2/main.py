@@ -60,7 +60,6 @@ while True:
 		# create and return message to let client know we are listening
 		message = {
 			"CommandRan": "Counter",
-			"GetData": counters[command_object["Id"]].getData().tolist()
 		}
 		conn.sendall(json.dumps(message).encode())
 
