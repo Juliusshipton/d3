@@ -21,6 +21,7 @@ tt_socket.connect((HOST, PORT))
 print("Connected")
 
 class TimeTagger():
+
 	ports = [
 		1234, 5678, 9012, 3456, 7890,
 		2345, 6789, 1024, 2048, 3072,
@@ -38,7 +39,7 @@ class TimeTagger():
 	def Counter(channel: int, pSecPerPoint: int, traceLength: int):
 
 		# Get port from connection and create new socket 
-		connection_port = ports[port_idx]
+		connection_port = TimeTagger.ports[TimeTagger.port_idx]
 		new_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 		# Send message to server to start listening for connection on port
@@ -64,7 +65,7 @@ class TimeTagger():
 		# Once listening message received connect
 		new_socket.connect((HOST, connection_port))
 		print("Counter initialized in ", elapsed_time, "seconds, ", "on port", connection_port)
-		port_idx = port_idx+1
+		TimeTagger.port_idx = TimeTagger.port_idx+1
 
 
 		# return an object that contains a method called getData()
