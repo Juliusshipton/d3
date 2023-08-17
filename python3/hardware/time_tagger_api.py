@@ -32,7 +32,7 @@ class TimeTagger():
 		data = tt_socket.recv(2000000000).decode()
 
 		elapsed_time = time.time() - start_time
-		print("Received in ", elapsed_time, "seconds")
+		print("Received counter data in ", elapsed_time, "seconds")
 		
 		# return an object that contains a method called getData()
 		class CounterResult:
@@ -56,7 +56,7 @@ class TimeTagger():
 				data_received = self.socket.recv(2000000000).decode()
 
 				elapsed_time = time.time() - start_time
-				print("Received in ", elapsed_time, "seconds")
+				print("Received counter data in ", elapsed_time, "seconds")
 
 				result_object = json.loads(data_received)
 
@@ -88,7 +88,7 @@ class TimeTagger():
 		data = tt_socket.recv(2000000000).decode()
 
 		elapsed_time = time.time() - start_time
-		print("Received in ", elapsed_time, "seconds")
+		print("Received pulsed data in ", elapsed_time, "seconds")
 
 		# return an object that contains a method called getData()
 		class PulsedResult:
@@ -112,7 +112,7 @@ class TimeTagger():
 				data_received = self.socket.recv(2000000000).decode()
 
 				elapsed_time = time.time() - start_time
-				print("Received in ", elapsed_time, "seconds")
+				print("Received pulsed data in ", elapsed_time, "seconds")
 
 				result_object = json.loads(data_received)
 

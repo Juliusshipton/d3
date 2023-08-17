@@ -9,6 +9,19 @@ import json
 
 print "Python 2 running ..."
 HOST = '127.0.0.1' 
+
+ports = [
+    1234, 5678, 9012, 3456, 7890,
+    2345, 6789, 1024, 2048, 3072,
+    4096, 5120, 6144, 7168, 8192,
+    9216, 10240, 11264, 12288, 13312,
+    14336, 15360, 16384, 17408, 18432,
+    19456, 20480, 21504, 22528, 23552
+]
+
+port_idx = 0
+
+
 PORT = 8888
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST, PORT))
