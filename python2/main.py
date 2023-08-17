@@ -10,18 +10,6 @@ import json
 print "Python 2 running ..."
 HOST = '127.0.0.1' 
 
-ports = [
-    1234, 5678, 9012, 3456, 7890,
-    2345, 6789, 1024, 2048, 3072,
-    4096, 5120, 6144, 7168, 8192,
-    9216, 10240, 11264, 12288, 13312,
-    14336, 15360, 16384, 17408, 18432,
-    19456, 20480, 21504, 22528, 23552
-]
-
-port_idx = 0
-
-
 PORT = 8888
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST, PORT))
@@ -40,6 +28,12 @@ time_tagger = None
 # dictionary accessed by id
 counters = {}
 
+# Define a class to represent the object
+class ObjectThread(object):
+    def __init__(self, counter, connection):
+        self.counter = counter
+        self.connection = connection
+	
 while True: 
 
 	# 1 receive data and parse into json object for easy access
@@ -56,26 +50,40 @@ while True:
 	# 3 if command is Counter create a counter with the params, and set in dictionary by id key		
 	if(command_object["Command"] == "Counter"):
 		
-		# create counter 
-		counters[command_object["Id"]] = TimeTagger.Counter(time_tagger, *command_object["Params"])
-		
-		# indicate 
-		# print(counters[command_object["Id"]].getData())
-		
-		# create and return message
+		# create new socket connection and listen for connections on the port parameter
+		new_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		port = command_object["Port"]
+		new_socket.bind((HOST, port))
+		new_socket.listen(5)
+
+
+		# create and return message to let client know we are listening
 		message = {
 			"CommandRan": "Counter",
 			"GetData": counters[command_object["Id"]].getData().tolist()
 		}
 		conn.sendall(json.dumps(message).encode())
-		print("Counter Initialized ...")
+
+		# after return message sent we accept connection from client creat counter object and return
+		new_conn, addr = new_socket.accept()
+
+		# create counter object and set
+		counter_obj = TimeTagger.Counter(time_tagger, *command_object["Params"])
+		counters[command_object["Id"]] = ObjectThread(counter_obj, new_conn)
+
+		print("Counter Initialized on port" + port + "...")
+
+		# indicate 
+		# print(counters[command_object["Id"]].getData())
+		
+		
 
 
 	# If command is get data, get the correct counter to call get data from dictionary by id
 	if(command_object["Command"] == "GetDataCounter"):
 		
 		# get counter from dictionary by id 
-		counter = counters[command_object["Id"]]
+		counter_thread = counters[command_object["Id"]]
 
 		# console log
 		# print(counter.getData())
@@ -83,10 +91,10 @@ while True:
 		# create and return message
 		message = {
 			"CommandRan": "GetDataCounter",
-			"Data": counter.getData().tolist()
+			"Data": counter_thread.counter.getData().tolist()
 		}
 
-		conn.sendall(json.dumps(message).encode())
+		counter_thread.connection.sendall(json.dumps(message).encode())
 		# print("Response Sent getDataCounter ...")
 
 

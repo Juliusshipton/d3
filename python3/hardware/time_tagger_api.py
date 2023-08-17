@@ -12,6 +12,17 @@ import sys
 
 print("Python 3 running ...")
 
+ports = [
+    1234, 5678, 9012, 3456, 7890,
+    2345, 6789, 1024, 2048, 3072,
+    4096, 5120, 6144, 7168, 8192,
+    9216, 10240, 11264, 12288, 13312,
+    14336, 15360, 16384, 17408, 18432,
+    19456, 20480, 21504, 22528, 23552
+]
+
+port_idx = 0
+
 HOST = '127.0.0.1'
 PORT = 8888
 
@@ -27,6 +38,11 @@ class TimeTagger():
 	# Only way counter is called in our code is with 3 integer parameters
 	def Counter(channel: int, pSecPerPoint: int, traceLength: int):
 
+		# Get port from connection and create new socket 
+		connection_port = ports[port_idx]
+		new_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+		# Send message to server to start listening for connection on port
 		params = [channel, int(pSecPerPoint), traceLength]
 		unique_id = TimeTagger.generate_random_id(10)
 		command = {
@@ -34,18 +50,24 @@ class TimeTagger():
 			"Command": "Counter",
 			"Id": unique_id, 
 			"Params": params,
+			"Port": connection_port,
 		}
 
 		#This block of sends the command and stores received data in data string
-		print("Sending request getDataCounter ...")
+		print("Sending connection request Counter ...")
 		start_time = time.time()
 		
 		tt_socket.sendall(json.dumps(command).encode())
 		data = tt_socket.recv(2000000000).decode()
 
 		elapsed_time = time.time() - start_time
-		print("Received counter data in ", elapsed_time, "seconds")
 		
+		# Once listening message received connect
+		new_socket.connect((HOST, connection_port))
+		print("Counter initialized in ", elapsed_time, "seconds, ", "on port", connection_port)
+		port_idx = port_idx+1
+
+
 		# return an object that contains a method called getData()
 		class CounterResult:
 			def __init__(self, socket, id):
@@ -77,7 +99,7 @@ class TimeTagger():
 				return np.array(result_list)
 
 		
-		return CounterResult(tt_socket, unique_id)
+		return CounterResult(new_socket, unique_id)
 
 
 	# Only way pulsed is called in our code is with 6 integer parameters
