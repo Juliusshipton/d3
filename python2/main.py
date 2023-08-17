@@ -36,28 +36,28 @@ class ObjectThread(object):
 	
 	def run(self):
 		print "Running Object Thread ..."
-		while True: 
-			# 1 receive data and parse into json object for easy access
-			data_received = conn.recv(1024).decode()	
-			command_object = json.loads(data_received)
+		# while True: 
+		# 	# 1 receive data and parse into json object for easy access
+		# 	data_received = conn.recv(1024).decode()	
+		# 	command_object = json.loads(data_received)
 			
-			# If command is get data, get the correct counter to call get data from dictionary by id
-			if(command_object["Command"] == "GetDataCounter"):
+		# 	# If command is get data, get the correct counter to call get data from dictionary by id
+		# 	if(command_object["Command"] == "GetDataCounter"):
 				
-				# get counter from dictionary by id 
-				counter_thread = counters[command_object["Id"]]
+		# 		# get counter from dictionary by id 
+		# 		counter_thread = counters[command_object["Id"]]
 
-				# console log
-				# print(counter.getData())
+		# 		# console log
+		# 		# print(counter.getData())
 				
-				# create and return message
-				message = {
-					"CommandRan": "GetDataCounter",
-					"Data": counter_thread.counter.getData().tolist()
-				}
+		# 		# create and return message
+		# 		message = {
+		# 			"CommandRan": "GetDataCounter",
+		# 			"Data": counter_thread.counter.getData().tolist()
+		# 		}
 
-				counter_thread.connection.sendall(json.dumps(message).encode())
-				# print("Response Sent getDataCounter ...")
+		# 		counter_thread.connection.sendall(json.dumps(message).encode())
+		# 		# print("Response Sent getDataCounter ...")
 	
 while True: 
 
