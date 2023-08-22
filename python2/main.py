@@ -44,7 +44,7 @@ class ObjectThread(object):
 
 		if(self.name == 'Pulsed'):
 			print "Starting pulsed thread ..."
-			thread = threading.Thread(target=self.pulsed_get_data, name="counter thread")
+			thread = threading.Thread(target=self.pulsed_get_data, name="pulsed thread")
 			thread.start()
 
 
@@ -59,10 +59,10 @@ class ObjectThread(object):
 			if(command_object["Command"] == "GetDataCounter"):
 				
 				# get counter from dictionary by id 
-				counter = counters[command_object["Id"]].counter
+				counter_thread = counters[command_object["Id"]]
 
 				# Example 2D array
-				array_2d = counter.getData()
+				array_2d = counter_thread.counter.getData()
 				
 				# Convert 2D array to Unicode string
 				list_of_lists = array_2d.tolist()
@@ -73,7 +73,7 @@ class ObjectThread(object):
 					"Data": list_of_lists
 				}
 
-				counter.connection.sendall(json.dumps(message).encode())
+				counter_thread.connection.sendall(json.dumps(message).encode())
 
 
 	def counter_get_data(self):
