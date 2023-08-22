@@ -159,6 +159,9 @@ class TimeTagger():
 				elapsed_time = time.time() - start_time
 				print("Received pulsed data in ", elapsed_time, "seconds")
 
+
+				print(data_received)
+
 				result_object = json.loads(data_received)
 
 				result_list = result_object["Data"]
