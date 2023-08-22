@@ -6,6 +6,8 @@ from TimeTagger import TimeTagger
 import socket
 import sys
 import json
+import threading
+
 
 print "Python 2 running ..."
 HOST = '127.0.0.1' 
@@ -32,8 +34,13 @@ class ObjectThread(object):
 	def __init__(self, counter, connection):
 		self.counter = counter
 		self.connection = connection
-	
+
 	def run(self):
+		print "Starting thread ..."
+		threading.Thread(self, target=self.counter_get_data, name="counter thread")
+
+	
+	def counter_get_data(self):
 		print "Running Object Thread ..."
 		while True: 
 			# 1 receive data and parse into json object for easy access
