@@ -9,7 +9,6 @@ import json
 
 print "Python 2 running ..."
 HOST = '127.0.0.1' 
-
 PORT = 8888
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST, PORT))
@@ -38,7 +37,7 @@ class ObjectThread(object):
 		print "Running Object Thread ..."
 		# while True: 
 		# 	# 1 receive data and parse into json object for easy access
-		# 	data_received = conn.recv(1024).decode()	
+		# 	data_received = self.connection.recv(1024).decode()	
 		# 	command_object = json.loads(data_received)
 			
 		# 	# If command is get data, get the correct counter to call get data from dictionary by id
@@ -103,8 +102,6 @@ while True:
 		# print(counters[command_object["Id"]].getData())
 		
 		
-
-
 	# If command is get data, get the correct counter to call get data from dictionary by id
 	if(command_object["Command"] == "GetDataCounter"):
 		
