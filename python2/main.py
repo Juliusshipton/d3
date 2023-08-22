@@ -73,6 +73,10 @@ class ObjectThread(object):
 					"Data": list_of_lists
 				}
 
+				# size indicator for return
+				print 'Sending ...'
+				print array_2d.shape()
+
 				self.connection.sendall(json.dumps(message).encode())
 
 

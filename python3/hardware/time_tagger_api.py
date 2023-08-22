@@ -154,7 +154,7 @@ class TimeTagger():
 				start_time = time.time()
 
 				self.socket.sendall(json.dumps(command).encode())
-				data_received = self.socket.recv(sys.maxint).decode()
+				data_received = self.socket.recv(2 ** 31 - 1).decode()
 
 				elapsed_time = time.time() - start_time
 				print("Received pulsed data in ", elapsed_time, "seconds")
