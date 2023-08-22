@@ -105,6 +105,10 @@ class TimeTagger():
 	# Only way pulsed is called in our code is with 6 integer parameters
 	def Pulsed(nBins: int, binWidth: int, nLaser: int, c1: int, c2: int, c3: int):
 
+		# Get port from connection and create new socket 
+		connection_port = TimeTagger.ports[TimeTagger.port_idx]
+		new_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
 		params = [nBins, binWidth, nLaser, c2, c2, c3]
 		unique_id = TimeTagger.generate_random_id(10)
 		command = {
@@ -112,17 +116,24 @@ class TimeTagger():
 			"Command": "Pulsed",
 			"Id": unique_id, 
 			"Params": params,
+			"Port": connection_port,
 		}
 	
 		#This block of sends the command and stores received data in data string
-		print("Sending request Pulsed ...")
+		print("Sending connection request Pulsed ...")
 		start_time = time.time()
 
 		tt_socket.sendall(json.dumps(command).encode())
 		data = tt_socket.recv(2000000000).decode()
 
 		elapsed_time = time.time() - start_time
-		print("Received pulsed data in ", elapsed_time, "seconds")
+		
+		# Once listening message received connect
+		new_socket.connect((HOST, connection_port))
+		print("Pulsed initialized in ", elapsed_time, "seconds, ", "on port", connection_port)
+		TimeTagger.port_idx = TimeTagger.port_idx+1
+
+
 
 		# return an object that contains a method called getData()
 		class PulsedResult:
@@ -155,7 +166,7 @@ class TimeTagger():
 				return np.array(result_list)
 
 		
-		return PulsedResult(tt_socket, unique_id)
+		return PulsedResult(new_socket, unique_id)
 
 	def generate_random_id(length):
 		import random
