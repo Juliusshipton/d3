@@ -56,7 +56,7 @@ class ObjectThread(object):
 			command_object = json.loads(data_received)
 			
 			# If command is get data, get the correct counter to call get data from dictionary by id
-			if(command_object["Command"] == "GetDataCounter"):
+			if(command_object["Command"] == "GetDataPulsed"):
 				
 				# get counter from dictionary by id 
 				counter_thread = counters[command_object["Id"]]
