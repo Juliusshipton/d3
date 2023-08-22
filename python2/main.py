@@ -37,8 +37,8 @@ class ObjectThread(object):
 
 	def run(self):
 		print "Starting thread ..."
-		threading.Thread(target=self.counter_get_data, name="counter thread")
-
+		thread = threading.Thread(target=self.counter_get_data, name="counter thread")
+		thread.start()
 	
 	def counter_get_data(self):
 		print "Running Object Thread ..."
