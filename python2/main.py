@@ -62,7 +62,7 @@ class ObjectThread(object):
 				counter_thread = counters[command_object["Id"]]
 
 				# Example 2D array
-				array_2d = counter_thread.counter.getData()
+				array_2d = self.counter.getData()
 				
 				# Convert 2D array to Unicode string
 				list_of_lists = array_2d.tolist()
@@ -73,7 +73,7 @@ class ObjectThread(object):
 					"Data": list_of_lists
 				}
 
-				counter_thread.connection.sendall(json.dumps(message).encode())
+				self.connection.sendall(json.dumps(message).encode())
 
 
 	def counter_get_data(self):
@@ -87,7 +87,7 @@ class ObjectThread(object):
 			if(command_object["Command"] == "GetDataCounter"):
 				
 				# get counter from dictionary by id 
-				counter_thread = counters[command_object["Id"]]
+				# counter_thread = counters[command_object["Id"]]
 
 				# console log
 				# print(counter.getData())
@@ -95,10 +95,10 @@ class ObjectThread(object):
 				# create and return message
 				message = {
 					"CommandRan": "GetDataCounter",
-					"Data": counter_thread.counter.getData().tolist()
+					"Data": self.counter.getData().tolist()
 				}
 
-				counter_thread.connection.sendall(json.dumps(message).encode())
+				self.connection.sendall(json.dumps(message).encode())
 				# print("Response Sent getDataCounter ...")
 	
 while True: 
