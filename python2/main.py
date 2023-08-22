@@ -75,7 +75,7 @@ class ObjectThread(object):
 
 				# size indicator for return
 				print 'Sending ...'
-				print array_2d.shape()
+				print list_of_lists.shape()
 
 				self.connection.sendall(json.dumps(message).encode())
 
