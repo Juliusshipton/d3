@@ -90,7 +90,7 @@ class TimeTagger():
 				data_received = self.socket.recv(2000000000).decode()
 
 				elapsed_time = time.time() - start_time
-				print("Received counter data in ", elapsed_time, "seconds")
+				# print("Received counter data in ", elapsed_time, "seconds")
 
 				result_object = json.loads(data_received)
 
