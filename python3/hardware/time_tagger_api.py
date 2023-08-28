@@ -83,14 +83,14 @@ class TimeTagger():
 				}
 
 				#This block of sends the command and stores received data in data string
-				# print("Sending request getDataCounter ...")
+				print("Sending request getDataCounter ...")
 				start_time = time.time()
 
 				self.socket.sendall(json.dumps(command).encode())
 				data_received = self.socket.recv(2000000000).decode()
 
 				elapsed_time = time.time() - start_time
-				# print("Received counter data in ", elapsed_time, "seconds")
+				print("Received counter data in ", elapsed_time, "seconds")
 
 				result_object = json.loads(data_received)
 
