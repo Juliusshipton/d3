@@ -107,6 +107,9 @@ class ObjectThread(object):
 	
 while True: 
 
+	thread_count = threading.activeCount()
+	print "Number of threads running:", thread_count
+
 	# 1 receive data and parse into json object for easy access
 	data_received = conn.recv(1024).decode()	
 	command_object = json.loads(data_received)
@@ -191,6 +194,7 @@ while True:
 		counters[command_object["Id"]] = new_thread
 
 		print "Pulsed Initialized on port", port, "..."
+
 
 
 
