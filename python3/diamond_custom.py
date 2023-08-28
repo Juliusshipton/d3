@@ -28,10 +28,10 @@ if __name__ == '__main__':
     odmr = ODMR()
     odmr.edit_traits()
 
-    # Start Rabi / PulsedAnalyser
-    from analysis.pulsed import PulsedAnalyzer
-    pulsed_analyzer = PulsedAnalyzer()
-    pulsed_analyzer.edit_traits()
+    # # Start Rabi / PulsedAnalyser
+    # from analysis.pulsed import PulsedAnalyzer
+    # pulsed_analyzer = PulsedAnalyzer()
+    # pulsed_analyzer.edit_traits()
 
 
         
