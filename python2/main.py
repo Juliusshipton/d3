@@ -85,7 +85,7 @@ class ObjectThread(object):
 		while True: 
 			# 1 receive data and parse into json object for easy access
 			data_received = self.connection.recv(1024).decode()	
-			command_object = json.loads(data_received)
+			# command_object = json.loads(data_received)
 			
 			# If command is get data, get the correct counter to call get data from dictionary by id
 			# if(command_object["Command"] == "GetDataCounter"):
