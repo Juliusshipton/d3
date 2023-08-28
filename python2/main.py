@@ -88,7 +88,7 @@ class ObjectThread(object):
 			command_object = json.loads(data_received)
 			
 			# If command is get data, get the correct counter to call get data from dictionary by id
-			if(command_object["Command"] == "GetDataCounter"):
+			# if(command_object["Command"] == "GetDataCounter"):
 				
 				# get counter from dictionary by id 
 				# counter_thread = counters[command_object["Id"]]
@@ -97,12 +97,12 @@ class ObjectThread(object):
 				# print(counter.getData())
 				
 				# create and return message
-				message = {
-					"CommandRan": "GetDataCounter",
-					"Data": self.counter.getData().tolist()
-				}
+			message = {
+				"CommandRan": "GetDataCounter",
+				"Data": self.counter.getData().tolist()
+			}
 
-				self.connection.sendall(json.dumps(message).encode())
+			self.connection.sendall(json.dumps(message).encode())
 				# print("Response Sent getDataCounter ...")
 	
 while True: 
