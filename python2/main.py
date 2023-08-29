@@ -69,6 +69,7 @@ class ObjectThread(object):
 			self.connection.sendall(json.dumps(message).encode())
 
 
+
 	def counter_get_data(self):
 		print "Running Counter Object Thread ..."
 		while True: 
