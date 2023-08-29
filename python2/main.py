@@ -51,59 +51,36 @@ class ObjectThread(object):
 	def pulsed_get_data(self):
 		print "Running Pulsed Object Thread ..."
 		while True: 
-			# 1 receive data and parse into json object for easy access
+			# Receive get data and return json object with data
 			data_received = self.connection.recv(1024).decode()	
-			command_object = json.loads(data_received)
-			
-			# If command is get data, get the correct counter to call get data from dictionary by id
-			if(command_object["Command"] == "GetDataPulsed"):
+
+			# Example 2D array
+			array_2d = self.counter.getData()
 				
-				# get counter from dictionary by id 
-				counter_thread = counters[command_object["Id"]]
+			# Convert 2D array to Unicode string
+			list_of_lists = array_2d.tolist()
 
-				# Example 2D array
-				array_2d = self.counter.getData()
-				
-				# Convert 2D array to Unicode string
-				list_of_lists = array_2d.tolist()
+			# create and return message
+			message = {
+				"CommandRan": "GetDataPulsed",
+				"Data": list_of_lists
+			}
 
-				# create and return message
-				message = {
-					"CommandRan": "GetDataPulsed",
-					"Data": list_of_lists
-				}
-
-				# size indicator for return
-				# print 'Sending ...'
-				# print array_2d.shape
-
-				self.connection.sendall(json.dumps(message).encode())
+			self.connection.sendall(json.dumps(message).encode())
 
 
 	def counter_get_data(self):
 		print "Running Counter Object Thread ..."
 		while True: 
-			# 1 receive data and parse into json object for easy access
+			# Receive get data request and send back json message with data
 			data_received = self.connection.recv(1024).decode()	
-			# command_object = json.loads(data_received)
-			
-			# If command is get data, get the correct counter to call get data from dictionary by id
-			# if(command_object["Command"] == "GetDataCounter"):
-				
-				# get counter from dictionary by id 
-				# counter_thread = counters[command_object["Id"]]
 
-				# console log
-				# print(counter.getData())
-				
-				# create and return message
 			message = {
 				"CommandRan": "GetDataCounter",
 				"Data": self.counter.getData().tolist()
 			}
 
 			self.connection.sendall(json.dumps(message).encode())
-				# print("Response Sent getDataCounter ...")
 	
 while True: 
 
@@ -146,29 +123,7 @@ while True:
 		new_thread.run()
 		counters[command_object["Id"]] = new_thread
 
-		print "Counter Initialized on port", port, "..."
-
-		# indicate 
-		# print(counters[command_object["Id"]].getData())
-		
-		
-	# # If command is get data, get the correct counter to call get data from dictionary by id
-	# if(command_object["Command"] == "GetDataCounter"):
-		
-	# 	# get counter from dictionary by id 
-	# 	counter_thread = counters[command_object["Id"]]
-
-	# 	# console log
-	# 	# print(counter.getData())
-		
-	# 	# create and return message
-	# 	message = {
-	# 		"CommandRan": "GetDataCounter",
-	# 		"Data": counter_thread.counter.getData().tolist()
-	# 	}
-
-	# 	counter_thread.connection.sendall(json.dumps(message).encode())
-	# 	# print("Response Sent getDataCounter ...")
+		print "Counter Initialized on port", port, "..."	
 
 
 	#  If command is Pulsed call TimeTagger.Pulsed() with the params, and set in dictionary by id key		
@@ -194,31 +149,3 @@ while True:
 		counters[command_object["Id"]] = new_thread
 
 		print "Pulsed Initialized on port", port, "..."
-
-
-
-
-		# If command is get data, get the correct counter to call get data from dictionary by id
-	
-	
-	# if(command_object["Command"] == "GetDataPulsed"):
-		
-	# 	# get counter from dictionary by id 
-	# 	counter = counters[command_object["Id"]]
-
-	# 	# Example 2D array
-	# 	array_2d = counters[command_object["Id"]].getData()
-		
-	# 	# Convert 2D array to Unicode string
-	# 	list_of_lists = array_2d.tolist()
-
-	# 	# create and return message
-	# 	message = {
-	# 		"CommandRan": "GetDataPulsed",
-	# 		"Data": list_of_lists
-	# 	}
-
-	# 	conn.sendall(json.dumps(message).encode())
-	# 	# print("Response Sent getDataPulsed ...")
-
-
