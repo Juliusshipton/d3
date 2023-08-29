@@ -62,8 +62,6 @@ class TimeTagger():
 
 		elapsed_time = time.time() - start_time
 		
-		time.sleep(1)
-
 		# Once listening message received connect
 		new_socket.connect((HOST, connection_port))
 		print("Counter initialized in ", elapsed_time, "seconds, ", "on port", connection_port)
